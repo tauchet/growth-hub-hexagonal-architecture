@@ -20,8 +20,6 @@ public class NoteMapper {
     public static NoteEntity mapToNoteEntity(Note note) {
         return NoteEntity.builder()
                 .id(note.getId())
-                .student(Optional.of(note.getStudent()).map(StudentMapper::mapToStudentEntity).orElse(null))
-                .subject(Optional.of(note.getSubject()).map(SubjectMapper::mapToSubjectEntity).orElse(null))
                 .number(note.getNumber())
                 .note(note.getNote())
                 .build();
@@ -30,8 +28,6 @@ public class NoteMapper {
     public static Note mapToNote(NoteEntity noteEntity) {
         return Note.builder()
                 .id(noteEntity.getId())
-                .student(Optional.of(noteEntity.getStudent()).map(StudentMapper::mapToStudent).orElse(null))
-                .subject(Optional.of(noteEntity.getSubject()).map(SubjectMapper::mapToSubject).orElse(null))
                 .number(noteEntity.getNumber())
                 .note(noteEntity.getNote())
                 .build();

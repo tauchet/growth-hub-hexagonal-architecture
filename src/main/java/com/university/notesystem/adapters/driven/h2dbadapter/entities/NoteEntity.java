@@ -19,12 +19,7 @@ public class NoteEntity {
     private Integer id;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "studentId")
-    private StudentEntity student;
-
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "subjectId")
-    private SubjectEntity subject;
+    private SubjectStudentEntity register;
 
     @Column(name = "number", nullable = false)
     private Integer number;

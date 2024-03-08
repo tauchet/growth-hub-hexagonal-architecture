@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor
@@ -12,17 +11,18 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "subjects")
-public class SubjectEntity implements Serializable {
+@Table(name = "subject_students")
+public class SubjectStudentEntity implements Serializable {
 
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    private StudentEntity student;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
-    private List<SubjectStudentEntity> subjects;
-    
+    @ManyToOne(cascade = CascadeType.REMOVE)
+    private SubjectEntity subject;
+
 }
+
