@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "bd02efb5-8812-4301-8638-b1cf08f8ec03",
+		"name": "Hexagonal Architecture",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "28641244"
+	},
+	"item": [
+		{
+			"name": "Students",
+			"item": [
+				{
+					"name": "Create Student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"code\": 1,\r\n    \"name\": \"Cristian\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/students"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{HOST}}/students"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Student",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{HOST}}/students/1"
+					},
+					"response": []
+				},
+				{
+					"name": "Register Notes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subjectId\": 1,\r\n    \"notes\": [\r\n        { \"number\": 1, \"value\": 1.2 },\r\n        { \"number\": 2, \"value\": 5 },\r\n        { \"number\": 3, \"value\": 3 }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/students/1/notes"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Notes",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subjectId\": 1,\r\n    \"notes\": [\r\n        { \"number\": 2, \"value\": 2 }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/students/notes"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Notes",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"subject\": 1,\r\n    \"notes\": {\r\n        \"n1\": 1,\r\n        \"n2\": 1,\r\n        \"n3\": 1\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/students/1/notes"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Final Notes By Student",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{HOST}}/students/1/final-notes"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Final Notes By All Students",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{HOST}}/students/final-notes"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Subjects",
+			"item": [
+				{
+					"name": "Create Subject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 1,\r\n    \"name\": \"Matemáticas\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/subjects"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Subjects",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "{{HOST}}/subjects"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Subject",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "{{HOST}}/subjects/1"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "HOST",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
