@@ -1,9 +1,7 @@
 package com.university.notesystem.infrastructure.configuration;
 
 
-import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.StudentPort;
-import com.university.notesystem.domain.ports.SubjectPort;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
 import com.university.notesystem.domain.usecases.student.*;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 public class StudentConfiguration {
 
     private final StudentPort studentPort;
-    private final NotePort notePort;
     private final SubjectStudentPort subjectStudentPort;
 
     @Bean

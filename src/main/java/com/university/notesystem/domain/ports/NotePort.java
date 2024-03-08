@@ -10,5 +10,4 @@ public interface NotePort {
     void save(Note note);
     Note findBySubjectStudentAndNumber(Integer registerId, Integer number);
 
-
 }
