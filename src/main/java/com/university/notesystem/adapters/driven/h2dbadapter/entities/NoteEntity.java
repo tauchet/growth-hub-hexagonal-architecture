@@ -19,7 +19,7 @@ public class NoteEntity {
     private Integer id;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
-    private SubjectStudentEntity register;
+    private SubjectStudentEntity subjectStudent;
 
     @Column(name = "number", nullable = false)
     private Integer number;

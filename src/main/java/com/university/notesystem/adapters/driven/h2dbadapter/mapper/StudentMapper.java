@@ -6,8 +6,6 @@ import com.university.notesystem.domain.model.entities.Student;
 public class StudentMapper {
 
     public static StudentEntity mapToStudentEntity(Student student) {
-
-
         return StudentEntity.builder()
                 .id(student.getId())
                 .name(student.getName())

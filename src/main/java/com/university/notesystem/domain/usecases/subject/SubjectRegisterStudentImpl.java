@@ -34,6 +34,10 @@ public class SubjectRegisterStudentImpl implements SubjectRegisterStudent {
             throw new ResourceNotFoundException("Subject", "No se ha encontrado la asignatura por el id (" + data.getSubjectId() + ").");
         }
 
+        if (this.subjectStudentPort.existsByStudentAndSubject(student.getId(), data.getSubjectId())) {
+            throw new FieldException("id", "¡El estudiante ya se encuentra registrado!");
+        }
+
         if (data.getNotes() != null) {
             for (int i = 0; i < data.getNotes().size(); ++i) {
                 NoteEntryRequest note = data.getNotes().get(i);
@@ -55,7 +59,7 @@ public class SubjectRegisterStudentImpl implements SubjectRegisterStudent {
 
         for (NoteEntryRequest note: data.getNotes()) {
             this.notePort.save(Note.builder()
-                    .register(register)
+                    .subjectStudent(register)
                     .number(note.getNumber())
                     .note(note.getValue())
                     .build());

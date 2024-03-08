@@ -24,7 +24,6 @@ public class StudentGetAllSubjectWithNotesImpl implements StudentGetAllSubjectWi
             throw new ResourceNotFoundException("Student", "No se ha encontrado el estudiante por el id o código (" + id + ").");
         }
 
-
         return this.subjectStudentPort.findAllSubjectWithNotesByStudent(student.getId());
 
     }

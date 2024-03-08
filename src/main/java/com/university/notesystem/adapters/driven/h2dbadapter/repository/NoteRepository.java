@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface NoteRepository extends JpaRepository<NoteEntity, Integer> {
 
-    Optional<NoteEntity> findByRegisterAndNumber(SubjectStudentEntity register, Integer number);
+    Optional<NoteEntity> findBySubjectStudentAndNumber(SubjectStudentEntity subjectStudent, Integer number);
 
 }

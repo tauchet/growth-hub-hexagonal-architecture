@@ -4,10 +4,8 @@ import com.university.notesystem.domain.exceptions.FieldException;
 import com.university.notesystem.domain.exceptions.ResourceNotFoundException;
 import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Student;
-import com.university.notesystem.domain.model.entities.Subject;
 import com.university.notesystem.domain.model.entities.SubjectStudent;
 import com.university.notesystem.domain.model.request.NoteEntryRequest;
-import com.university.notesystem.domain.model.request.SubjectRegisterStudentRequest;
 import com.university.notesystem.domain.model.request.SubjectUpdateStudentNotesRequest;
 import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.StudentPort;
@@ -55,10 +53,10 @@ public class SubjectUpdateStudentNotesImpl implements SubjectUpdateStudentNotes 
                 throw new FieldException("notes." + i, "¡El número de la nota debe estar entre 1 y 3!");
             }
 
-            Note currentNote = this.notePort.findByRegisterAndNumber(register.getId(), note.getNumber());
+            Note currentNote = this.notePort.findBySubjectStudentAndNumber(register.getId(), note.getNumber());
             if (currentNote == null) {
                 currentNote = Note.builder()
-                        .register(register)
+                        .subjectStudent(register)
                         .number(note.getNumber())
                         .note(note.getValue())
                         .build();

@@ -26,8 +26,8 @@ public class NoteService implements NotePort {
     }
 
     @Override
-    public Note findByRegisterAndNumber(Integer registerId, Integer number) {
-        return this.noteRepository.findByRegisterAndNumber(
+    public Note findBySubjectStudentAndNumber(Integer registerId, Integer number) {
+        return this.noteRepository.findBySubjectStudentAndNumber(
                 SubjectStudentEntity.builder().id(registerId).build(),
                 number
         ).map(NoteMapper::mapToNote).orElse(null);

@@ -23,6 +23,6 @@ public class SubjectEntity implements Serializable {
     private String name;
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    private List<SubjectStudentEntity> subjects;
+    private List<SubjectStudentEntity> students;
     
 }

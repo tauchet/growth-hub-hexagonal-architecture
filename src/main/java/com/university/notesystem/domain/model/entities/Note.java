@@ -10,7 +10,7 @@ import lombok.*;
 public class Note {
 
     private Integer id;
-    private SubjectStudent register;
+    private SubjectStudent subjectStudent;
     private Integer number;
     private Double note;
 

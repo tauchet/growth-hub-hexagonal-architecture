@@ -51,7 +51,7 @@ public class SubjectsRestController {
         return SuccessResponse.create(HttpStatus.OK, true);
     }
 
-    @PostMapping("subjects/{id}/update-notes")
+    @PutMapping("subjects/{id}/update-notes")
     public ResponseEntity<SuccessResponse<Boolean>> onUpdateNotes(@PathVariable int id,
                                                                   @RequestBody SubjectUpdateStudentNotesRequest request) {
         request.setSubjectId(id);
