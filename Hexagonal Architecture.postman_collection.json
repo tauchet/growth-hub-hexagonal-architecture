@@ -46,42 +46,6 @@
 					"response": []
 				},
 				{
-					"name": "Register Notes",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"subjectId\": 1,\r\n    \"notes\": [\r\n        { \"number\": 1, \"value\": 1.2 },\r\n        { \"number\": 2, \"value\": 5 },\r\n        { \"number\": 3, \"value\": 3 }\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{HOST}}/students/1/notes"
-					},
-					"response": []
-				},
-				{
-					"name": "Update Notes",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"subjectId\": 1,\r\n    \"notes\": [\r\n        { \"number\": 2, \"value\": 2 }\r\n    ]\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{HOST}}/students/notes"
-					},
-					"response": []
-				},
-				{
 					"name": "Get All Notes",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -125,6 +89,42 @@
 		{
 			"name": "Subjects",
 			"item": [
+				{
+					"name": "Update Student Notes",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"studentId\": 1,\r\n    \"notes\": [\r\n        { \"number\": 2, \"value\": 2 }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/subjects/1/update-notes"
+					},
+					"response": []
+				},
+				{
+					"name": "Register Student",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"studentId\": 1,\r\n    \"notes\": [\r\n        { \"number\": 1, \"value\": 1.2 },\r\n        { \"number\": 2, \"value\": 1 },\r\n        { \"number\": 3, \"value\": 1 }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{HOST}}/subjects/1/students"
+					},
+					"response": []
+				},
 				{
 					"name": "Create Subject",
 					"request": {
