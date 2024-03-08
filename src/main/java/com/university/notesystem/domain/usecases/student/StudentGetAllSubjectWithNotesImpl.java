@@ -5,6 +5,7 @@ import com.university.notesystem.domain.model.dtos.SubjectWithNotesDTO;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.StudentPort;
+import com.university.notesystem.domain.ports.SubjectStudentPort;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -13,17 +14,19 @@ import java.util.List;
 public class StudentGetAllSubjectWithNotesImpl implements StudentGetAllSubjectWithNotes {
 
     private final StudentPort studentPort;
-    private final NotePort notePort;
+    private final SubjectStudentPort subjectStudentPort;
 
     @Override
     public List<SubjectWithNotesDTO> getAllByIdOrCode(Integer id, Integer code) {
 
         Student student = this.studentPort.getByIdOrCode(id, code);
         if (student == null) {
-            throw new ResourceNotFoundException("Student", "No se ha encontrado el estudiante por el id (" + id + ") o código (" + code + ").");
+            throw new ResourceNotFoundException("Student", "No se ha encontrado el estudiante por el id o código (" + id + ").");
         }
 
-        return this.notePort.findAllSubjectWithNotesByStudent(student.getId());
+
+        return this.subjectStudentPort.findAllSubjectWithNotesByStudent(student.getId());
+
     }
 
 }

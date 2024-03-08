@@ -1,6 +1,9 @@
 package com.university.notesystem.infrastructure.configuration;
 
+import com.university.notesystem.domain.ports.NotePort;
+import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.ports.SubjectPort;
+import com.university.notesystem.domain.ports.SubjectStudentPort;
 import com.university.notesystem.domain.usecases.subject.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +14,9 @@ import org.springframework.context.annotation.Configuration;
 public class SubjectConfiguration {
 
     private final SubjectPort subjectPort;
+    private final StudentPort studentPort;
+    private final NotePort notePort;
+    private final SubjectStudentPort subjectStudentPort;
 
     @Bean
     public SubjectAll subjectAll(){
@@ -27,5 +33,14 @@ public class SubjectConfiguration {
         return new SubjectDeleteImpl(this.subjectPort);
     }
 
+    @Bean
+    public SubjectRegisterStudent subjectRegisterStudent(){
+        return new SubjectRegisterStudentImpl(this.studentPort, this.subjectPort, this.subjectStudentPort, this.notePort);
+    }
+
+    @Bean
+    public SubjectUpdateStudentNotes subjectUpdateStudentNotes(){
+        return new SubjectUpdateStudentNotesImpl(this.studentPort, this.subjectPort, this.subjectStudentPort, this.notePort);
+    }
 
 }

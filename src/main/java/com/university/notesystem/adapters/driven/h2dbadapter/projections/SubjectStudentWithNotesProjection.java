@@ -2,11 +2,11 @@ package com.university.notesystem.adapters.driven.h2dbadapter.projections;
 
 import com.university.notesystem.adapters.driven.h2dbadapter.entities.SubjectEntity;
 
-public interface NoteWithSubjectProjection {
+import java.util.List;
+
+public interface SubjectStudentWithNotesProjection {
 
     SubjectEntity getSubject();
-    Integer getId();
-    Integer getNumber();
-    Double getNote();
+    List<SimpleNoteProjection> getNotes();
 
 }

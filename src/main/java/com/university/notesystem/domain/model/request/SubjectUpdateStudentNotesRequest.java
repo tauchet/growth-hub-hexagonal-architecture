@@ -11,8 +11,9 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @Builder
-public class CreateOrUpdateNotesRequest {
+public class SubjectUpdateStudentNotesRequest {
 
+    private int studentId;
     private int subjectId;
     private List<NoteEntryRequest> notes;
 

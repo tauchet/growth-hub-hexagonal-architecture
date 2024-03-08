@@ -26,5 +26,6 @@ public class NoteEntity {
 
     @ColumnDefault(value = "0")
     private Double note;
+
     
 }

@@ -7,6 +7,7 @@ import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.mapper.SubjectWithFinalNoteDTOMapper;
 import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.StudentPort;
+import com.university.notesystem.domain.ports.SubjectStudentPort;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 public class StudentGetSubjectWithFinalNoteByIdImpl implements StudentGetSubjectWithFinalNoteById {
 
     private final StudentPort studentPort;
-    private final NotePort notePort;
+    private final SubjectStudentPort subjectStudentPort;
 
     @Override
     public List<SubjectWithFinalNoteDTO> getAllByIdOrCode(Integer id, Integer code) {
@@ -27,7 +28,7 @@ public class StudentGetSubjectWithFinalNoteByIdImpl implements StudentGetSubject
             throw new ResourceNotFoundException("Student", "No se ha encontrado el estudiante por el id (" + id + ") o código (" + code + ").");
         }
 
-        List<SubjectWithNotesDTO> notes = this.notePort.findAllSubjectWithNotesByStudent(student.getId());
+        List<SubjectWithNotesDTO> notes = this.subjectStudentPort.findAllSubjectWithNotesByStudent(student.getId());
         return notes
                 .stream()
                 .map(SubjectWithFinalNoteDTOMapper::mapToSubjectWithFinalNoteDTO)

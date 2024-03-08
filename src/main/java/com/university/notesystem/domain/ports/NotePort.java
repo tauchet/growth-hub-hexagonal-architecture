@@ -9,9 +9,7 @@ public interface NotePort {
 
     List<Note> findAll();
     void save(Note note);
-    void delete(Note note);
-    Note findByStudentAndSubjectAndNumber(int studentId, int subjectId, int number);
+    Note findByRegisterAndNumber(Integer registerId, Integer number);
 
-    List<SubjectWithNotesDTO> findAllSubjectWithNotesByStudent(int studentId);
 
 }

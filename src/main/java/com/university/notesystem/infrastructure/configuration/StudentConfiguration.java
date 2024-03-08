@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 public class StudentConfiguration {
 
     private final StudentPort studentPort;
-    private final SubjectPort subjectPort;
     private final NotePort notePort;
 
     @Bean
@@ -30,11 +29,6 @@ public class StudentConfiguration {
     @Bean
     public StudentDelete studentDelete(){
         return new StudentDeleteImpl(this.studentPort);
-    }
-
-    @Bean
-    public StudentCreateOrUpdateNotes studentRegisterNotes(){
-        return new StudentCreateOrUpdateNotesImpl(this.studentPort, this.subjectPort, this.notePort);
     }
 
     @Bean

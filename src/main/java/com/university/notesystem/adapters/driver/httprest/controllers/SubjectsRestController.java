@@ -3,9 +3,9 @@ package com.university.notesystem.adapters.driver.httprest.controllers;
 import com.university.notesystem.adapters.driver.httprest.dtos.CreateSubjectDTO;
 import com.university.notesystem.adapters.driver.httprest.responses.SuccessResponse;
 import com.university.notesystem.domain.model.entities.Subject;
-import com.university.notesystem.domain.usecases.subject.SubjectAll;
-import com.university.notesystem.domain.usecases.subject.SubjectDelete;
-import com.university.notesystem.domain.usecases.subject.SubjectRegister;
+import com.university.notesystem.domain.model.request.SubjectRegisterStudentRequest;
+import com.university.notesystem.domain.model.request.SubjectUpdateStudentNotesRequest;
+import com.university.notesystem.domain.usecases.subject.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +20,8 @@ public class SubjectsRestController {
     private final SubjectRegister subjectRegister;
     private final SubjectAll subjectAll;
     private final SubjectDelete subjectDelete;
+    private final SubjectRegisterStudent subjectRegisterStudent;
+    private final SubjectUpdateStudentNotes subjectUpdateStudentNotes;
 
     @GetMapping("subjects")
     public ResponseEntity<SuccessResponse<List<Subject>>> onGetAll() {
@@ -38,6 +40,22 @@ public class SubjectsRestController {
     @DeleteMapping("subjects/{id}")
     public ResponseEntity<SuccessResponse<Boolean>> onDeleteSubject(@PathVariable int id) {
         this.subjectDelete.deleteById(id);
+        return SuccessResponse.create(HttpStatus.OK, true);
+    }
+
+    @PostMapping("subjects/{id}/students")
+    public ResponseEntity<SuccessResponse<Boolean>> onDeleteSubject(@PathVariable int id,
+                                                                    @RequestBody SubjectRegisterStudentRequest request) {
+        request.setSubjectId(id);
+        this.subjectRegisterStudent.register(request);
+        return SuccessResponse.create(HttpStatus.OK, true);
+    }
+
+    @PostMapping("subjects/{id}/update-notes")
+    public ResponseEntity<SuccessResponse<Boolean>> onUpdateNotes(@PathVariable int id,
+                                                                  @RequestBody SubjectUpdateStudentNotesRequest request) {
+        request.setSubjectId(id);
+        this.subjectUpdateStudentNotes.update(request);
         return SuccessResponse.create(HttpStatus.OK, true);
     }
 
