@@ -20,6 +20,7 @@ import java.util.List;
 public class StudentsRestController {
 
     private final StudentRegister studentRegister;
+    private final StudentDelete studentDelete;
     private final StudentAll studentAll;
     private final StudentCreateOrUpdateNotes studentCreateOrUpdateNotes;
     private final StudentGetAllSubjectWithNotes studentGetAllSubjectWithNotes;
@@ -43,6 +44,7 @@ public class StudentsRestController {
 
     @DeleteMapping("students/{id}")
     public ResponseEntity<SuccessResponse<Boolean>> onDeleteStudent(@PathVariable int id) {
+        this.studentDelete.deleteById(id);
         return SuccessResponse.create(HttpStatus.OK, true);
     }
 
