@@ -25,7 +25,7 @@ public class StudentEntity implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "student")
     private List<SubjectStudentEntity> subjects;
 
 }

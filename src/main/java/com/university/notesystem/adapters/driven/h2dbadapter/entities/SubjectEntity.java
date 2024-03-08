@@ -22,7 +22,7 @@ public class SubjectEntity implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "subject")
     private List<SubjectStudentEntity> students;
     
 }
