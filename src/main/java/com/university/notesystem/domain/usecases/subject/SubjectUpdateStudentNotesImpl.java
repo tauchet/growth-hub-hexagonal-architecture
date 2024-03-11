@@ -5,7 +5,7 @@ import com.university.notesystem.domain.exceptions.ResourceNotFoundException;
 import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.entities.SubjectStudent;
-import com.university.notesystem.domain.model.request.NoteEntryRequest;
+import com.university.notesystem.domain.model.request.EntryNoteRequest;
 import com.university.notesystem.domain.model.request.SubjectUpdateStudentNotesRequest;
 import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.StudentPort;
@@ -48,7 +48,7 @@ public class SubjectUpdateStudentNotesImpl implements SubjectUpdateStudentNotes 
 
         for (int i = 0; i < data.getNotes().size(); ++i) {
 
-            NoteEntryRequest note = data.getNotes().get(i);
+            EntryNoteRequest note = data.getNotes().get(i);
             if (note.getNumber() < 0 || note.getNumber() > 3) {
                 throw new FieldException("notes." + i, "¡El número de la nota debe estar entre 1 y 3!");
             }

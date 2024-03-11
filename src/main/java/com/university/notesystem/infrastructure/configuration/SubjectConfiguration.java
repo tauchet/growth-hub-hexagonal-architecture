@@ -33,4 +33,9 @@ public class SubjectConfiguration {
         return new SubjectUpdateStudentNotesImpl(this.studentPort, this.subjectPort, this.subjectStudentPort, this.notePort);
     }
 
+    @Bean
+    public SubjectCalculateFinalNote subjectCalculateFinalNote() {
+        return new SubjectCalculateFinalNoteImpl();
+    }
+
 }

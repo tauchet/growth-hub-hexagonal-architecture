@@ -2,13 +2,11 @@ package com.university.notesystem.domain.usescases.subject;
 
 import com.university.notesystem.domain.exceptions.FieldException;
 import com.university.notesystem.domain.exceptions.ResourceNotFoundException;
-import com.university.notesystem.domain.model.dtos.SimpleNoteDTO;
-import com.university.notesystem.domain.model.dtos.SubjectWithNotesDTO;
 import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.entities.Subject;
 import com.university.notesystem.domain.model.entities.SubjectStudent;
-import com.university.notesystem.domain.model.request.NoteEntryRequest;
+import com.university.notesystem.domain.model.request.EntryNoteRequest;
 import com.university.notesystem.domain.model.request.SubjectRegisterStudentRequest;
 import com.university.notesystem.domain.model.request.SubjectUpdateStudentNotesRequest;
 import com.university.notesystem.domain.ports.NotePort;
@@ -32,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ExtendWith(MockitoExtension.class)
 public class SubjectUpdateStudentNotesTest {
@@ -117,8 +114,8 @@ public class SubjectUpdateStudentNotesTest {
                 .studentId(student.getId())
                 .subjectId(subject.getId())
                 .notes(Arrays.asList(
-                        new NoteEntryRequest(1, 0.5),
-                        new NoteEntryRequest(2, 1.5)
+                        new EntryNoteRequest(1, 0.5),
+                        new EntryNoteRequest(2, 1.5)
                 ))
                 .build();
 
@@ -152,7 +149,7 @@ public class SubjectUpdateStudentNotesTest {
         SubjectUpdateStudentNotesRequest updateRequest = SubjectUpdateStudentNotesRequest.builder()
                 .studentId(student.getId())
                 .subjectId(student.getCode())
-                .notes(Collections.singletonList(new NoteEntryRequest(3, 5D)))
+                .notes(Collections.singletonList(new EntryNoteRequest(3, 5D)))
                 .build();
 
 

@@ -16,18 +16,8 @@ public class StudentConfiguration {
     private final SubjectStudentPort subjectStudentPort;
 
     @Bean
-    public StudentAll studentAll(){
-        return new StudentAllImpl(this.studentPort);
-    }
-
-    @Bean
-    public StudentRegister studentRegister(){
-        return new StudentRegisterImpl(this.studentPort);
-    }
-
-    @Bean
-    public StudentDelete studentDelete(){
-        return new StudentDeleteImpl(this.studentPort);
+    public StudentGeneralManager studentGeneralManager(){
+        return new StudentGeneralManagerImpl(this.studentPort);
     }
 
     @Bean

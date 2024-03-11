@@ -15,6 +15,6 @@ public class SubjectRegisterStudentRequest {
 
     private int studentId;
     private int subjectId;
-    private List<NoteEntryRequest> notes;
+    private List<EntryNoteRequest> notes;
 
 }

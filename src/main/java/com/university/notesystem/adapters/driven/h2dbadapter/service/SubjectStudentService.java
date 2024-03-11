@@ -57,20 +57,15 @@ public class SubjectStudentService implements SubjectStudentPort {
         List<SubjectStudentEntity> listSubjects = this.subjectStudentRepository.findAllByStudent(StudentEntity.builder().id(studentId).build());
         return listSubjects
                 .stream()
-                .map(subject -> {
-
-                    System.out.println(subject.getNotes());
-
-                    return new SubjectWithNotesDTO(
-                            subject.getSubject().getId(),
-                            subject.getSubject().getName(),
-                            subject.getNotes()
-                                    .stream()
-                                    .map(NoteMapper::mapToSimpleNoteDTO)
-                                    .sorted(Comparator.comparingInt(SimpleNoteDTO::getNumber))
-                                    .toList()
-                    );
-                })
+                .map(subject -> new SubjectWithNotesDTO(
+                        subject.getSubject().getId(),
+                        subject.getSubject().getName(),
+                        subject.getNotes()
+                                .stream()
+                                .map(NoteMapper::mapToSimpleNoteDTO)
+                                .sorted(Comparator.comparingInt(SimpleNoteDTO::getNumber))
+                                .toList()
+                ))
                 .collect(Collectors.toList());
     }
 

@@ -3,7 +3,7 @@ package com.university.notesystem.adapters.driver.httprest.controllers;
 import com.university.notesystem.adapters.driver.httprest.dtos.CreateStudentDTO;
 import com.university.notesystem.adapters.driver.httprest.responses.SuccessResponse;
 import com.university.notesystem.domain.model.dtos.StudentWithAllFinalNoteDTO;
-import com.university.notesystem.domain.model.dtos.SubjectWithFinalNoteDTO;
+import com.university.notesystem.domain.model.SubjectWithFinalNote;
 import com.university.notesystem.domain.model.dtos.SubjectWithNotesDTO;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.usecases.student.*;
@@ -18,21 +18,19 @@ import java.util.List;
 @RestController
 public class StudentsRestController {
 
-    private final StudentRegister studentRegister;
-    private final StudentDelete studentDelete;
-    private final StudentAll studentAll;
+    private final StudentGeneralManager studentGeneralManager;
     private final StudentGetAllSubjectWithNotes studentGetAllSubjectWithNotes;
     private final StudentGetSubjectWithFinalNoteById studentGetSubjectWithFinalNoteById;
     private final StudentGetSubjectWithFinalNoteByAll studentGetSubjectWithFinalNoteByAll;
 
     @GetMapping("students")
     public ResponseEntity<SuccessResponse<List<Student>>> onGetAll() {
-        return SuccessResponse.create(HttpStatus.OK, this.studentAll.findAll());
+        return SuccessResponse.create(HttpStatus.OK, this.studentGeneralManager.findAll());
     }
 
     @PostMapping("students")
     public ResponseEntity<SuccessResponse<Boolean>> onCreateStudent(@RequestBody CreateStudentDTO body) {
-        this.studentRegister.register(Student.builder()
+        this.studentGeneralManager.register(Student.builder()
                 .id(body.getId())
                 .code(body.getCode())
                 .name(body.getName())
@@ -42,7 +40,7 @@ public class StudentsRestController {
 
     @DeleteMapping("students/{id}")
     public ResponseEntity<SuccessResponse<Boolean>> onDeleteStudent(@PathVariable int id) {
-        this.studentDelete.deleteById(id);
+        this.studentGeneralManager.deleteById(id);
         return SuccessResponse.create(HttpStatus.OK, true);
     }
 
@@ -52,7 +50,7 @@ public class StudentsRestController {
     }
 
     @GetMapping("students/{id}/final-notes")
-    public ResponseEntity<SuccessResponse<List<SubjectWithFinalNoteDTO>>> onGetAllFinalNotes(@PathVariable int id) {
+    public ResponseEntity<SuccessResponse<List<SubjectWithFinalNote>>> onGetAllFinalNotes(@PathVariable int id) {
         return SuccessResponse.create(HttpStatus.OK, this.studentGetSubjectWithFinalNoteById.getAllByIdOrCode(id, id));
     }
 

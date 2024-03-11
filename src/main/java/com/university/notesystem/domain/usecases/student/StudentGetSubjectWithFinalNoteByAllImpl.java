@@ -1,15 +1,9 @@
 package com.university.notesystem.domain.usecases.student;
 
-import com.university.notesystem.adapters.driven.h2dbadapter.mapper.NoteMapper;
 import com.university.notesystem.domain.model.dtos.StudentWithAllFinalNoteDTO;
 import com.university.notesystem.domain.model.dtos.SubjectStudentWithNotesDTO;
-import com.university.notesystem.domain.model.dtos.SubjectWithFinalNoteDTO;
-import com.university.notesystem.domain.model.dtos.SubjectWithNotesDTO;
-import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Student;
-import com.university.notesystem.domain.model.entities.Subject;
 import com.university.notesystem.domain.model.mapper.SubjectWithFinalNoteDTOMapper;
-import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
 import lombok.RequiredArgsConstructor;
 

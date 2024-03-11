@@ -1,5 +1,6 @@
 package com.university.notesystem.domain.model.dtos;
 
+import com.university.notesystem.domain.model.SubjectWithFinalNote;
 import lombok.*;
 
 import java.util.List;
@@ -13,6 +14,6 @@ public class StudentWithAllFinalNoteDTO {
 
     private int id;
     private String name;
-    private List<SubjectWithFinalNoteDTO> notes;
+    private List<SubjectWithFinalNote> notes;
 
 }

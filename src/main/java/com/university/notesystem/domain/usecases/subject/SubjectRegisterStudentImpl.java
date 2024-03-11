@@ -1,12 +1,13 @@
 package com.university.notesystem.domain.usecases.subject;
 
 import com.university.notesystem.domain.exceptions.FieldException;
+import com.university.notesystem.domain.exceptions.ResourceAlreadyExistsException;
 import com.university.notesystem.domain.exceptions.ResourceNotFoundException;
 import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.entities.Subject;
 import com.university.notesystem.domain.model.entities.SubjectStudent;
-import com.university.notesystem.domain.model.request.NoteEntryRequest;
+import com.university.notesystem.domain.model.request.EntryNoteRequest;
 import com.university.notesystem.domain.model.request.SubjectRegisterStudentRequest;
 import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.StudentPort;
@@ -35,12 +36,12 @@ public class SubjectRegisterStudentImpl implements SubjectRegisterStudent {
         }
 
         if (this.subjectStudentPort.existsByStudentAndSubject(student.getId(), data.getSubjectId())) {
-            throw new FieldException("id", "¡El estudiante ya se encuentra registrado!");
+            throw new ResourceAlreadyExistsException("id", "¡El estudiante ya se encuentra registrado!");
         }
 
         if (data.getNotes() != null) {
             for (int i = 0; i < data.getNotes().size(); ++i) {
-                NoteEntryRequest note = data.getNotes().get(i);
+                EntryNoteRequest note = data.getNotes().get(i);
                 if (note.getNumber() < 0 || note.getNumber() > 3) {
                     throw new FieldException("notes." + i, "¡El número de la nota debe estar entre 1 y 3!");
                 }
@@ -57,7 +58,7 @@ public class SubjectRegisterStudentImpl implements SubjectRegisterStudent {
             return;
         }
 
-        for (NoteEntryRequest note: data.getNotes()) {
+        for (EntryNoteRequest note: data.getNotes()) {
             this.notePort.save(Note.builder()
                     .subjectStudent(register)
                     .number(note.getNumber())

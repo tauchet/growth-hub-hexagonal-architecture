@@ -5,7 +5,7 @@ import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.entities.Subject;
 import com.university.notesystem.domain.model.entities.SubjectStudent;
-import com.university.notesystem.domain.model.request.NoteEntryRequest;
+import com.university.notesystem.domain.model.request.EntryNoteRequest;
 import com.university.notesystem.domain.model.request.SubjectRegisterStudentRequest;
 import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.StudentPort;
@@ -22,7 +22,6 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Arrays;
-import java.util.Collections;
 
 @ExtendWith(MockitoExtension.class)
 public class SubjectRegisterStudentTest {
@@ -122,8 +121,8 @@ public class SubjectRegisterStudentTest {
                 .studentId(student.getId())
                 .subjectId(subject.getId())
                 .notes(Arrays.asList(
-                        new NoteEntryRequest(1, 0.5),
-                        new NoteEntryRequest(2, 1.5)
+                        new EntryNoteRequest(1, 0.5),
+                        new EntryNoteRequest(2, 1.5)
                 ))
                 .build();
 

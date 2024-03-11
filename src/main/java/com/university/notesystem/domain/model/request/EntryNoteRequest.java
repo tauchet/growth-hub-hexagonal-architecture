@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-public class NoteEntryRequest {
+public class EntryNoteRequest {
 
     private Integer number;
     private Double value;

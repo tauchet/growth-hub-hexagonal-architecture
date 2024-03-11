@@ -1,11 +1,10 @@
 package com.university.notesystem.domain.usecases.student;
 
 import com.university.notesystem.domain.exceptions.ResourceNotFoundException;
-import com.university.notesystem.domain.model.dtos.SubjectWithFinalNoteDTO;
+import com.university.notesystem.domain.model.SubjectWithFinalNote;
 import com.university.notesystem.domain.model.dtos.SubjectWithNotesDTO;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.mapper.SubjectWithFinalNoteDTOMapper;
-import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ public class StudentGetSubjectWithFinalNoteByIdImpl implements StudentGetSubject
     private final SubjectStudentPort subjectStudentPort;
 
     @Override
-    public List<SubjectWithFinalNoteDTO> getAllByIdOrCode(Integer id, Integer code) {
+    public List<SubjectWithFinalNote> getAllByIdOrCode(Integer id, Integer code) {
 
         Student student = this.studentPort.getByIdOrCode(id, code);
         if (student == null) {

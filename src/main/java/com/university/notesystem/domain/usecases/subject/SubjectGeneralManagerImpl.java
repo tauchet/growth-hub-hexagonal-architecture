@@ -1,6 +1,7 @@
 package com.university.notesystem.domain.usecases.subject;
 
 import com.university.notesystem.domain.exceptions.FieldException;
+import com.university.notesystem.domain.exceptions.ResourceAlreadyExistsException;
 import com.university.notesystem.domain.model.entities.Subject;
 import com.university.notesystem.domain.ports.SubjectPort;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class SubjectGeneralManagerImpl implements SubjectGeneralManager {
     public void register(Subject subject) {
 
         if (this.subjectPort.existsById(subject.getId())) {
-            throw new FieldException("id", "¡La id ya se encuentra ocupada!");
+            throw new ResourceAlreadyExistsException("id", "¡La id ya se encuentra ocupada!");
         }
 
         this.subjectPort.save(subject);
