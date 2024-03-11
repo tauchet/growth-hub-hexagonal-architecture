@@ -87,7 +87,12 @@ public class SubjectRegisterStudentTest {
         Mockito.when(this.subjectStudentPort.getByStudentIdOrCodeAndSubjectId(student.getId(), subject.getId())).thenReturn(subjectStudent);
         Mockito.when(this.subjectStudentPort.existsByStudentAndSubject(student.getId(), subject.getId())).thenReturn(true);
 
+
         Assertions.assertNotNull(this.subjectStudentPort.getByStudentIdOrCodeAndSubjectId(student.getId(), subject.getId()));
+
+
+
+
         Assertions.assertThrows(FieldException.class, () -> this.subjectRegisterStudent.register(request));
 
 

@@ -1,16 +1,21 @@
 package com.university.notesystem.domain.usecases.subject;
 
 import com.university.notesystem.domain.exceptions.FieldException;
-import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.entities.Subject;
-import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.ports.SubjectPort;
 import lombok.RequiredArgsConstructor;
 
+import java.util.List;
+
 @RequiredArgsConstructor
-public class SubjectRegisterImpl implements SubjectRegister {
+public class SubjectGeneralManagerImpl implements SubjectGeneralManager {
 
     private final SubjectPort subjectPort;
+
+    @Override
+    public List<Subject> findAll() {
+        return this.subjectPort.findAll();
+    }
 
     @Override
     public void register(Subject subject) {
@@ -20,6 +25,12 @@ public class SubjectRegisterImpl implements SubjectRegister {
         }
 
         this.subjectPort.save(subject);
+
+    }
+
+    @Override
+    public void deleteById(int id) {
+        this.subjectPort.deleteById(id);
     }
 
 }

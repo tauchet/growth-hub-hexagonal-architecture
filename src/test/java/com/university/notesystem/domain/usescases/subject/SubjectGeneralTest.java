@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -21,16 +22,8 @@ public class SubjectGeneralTest {
     @Mock
     private SubjectPort subjectPort;
 
-    private SubjectRegister subjectRegister;
-    private SubjectDelete subjectDelete;
-    private SubjectAll subjectAll;
-
-    @BeforeEach
-    public void setUp() {
-        this.subjectRegister = new SubjectRegisterImpl(this.subjectPort);
-        this.subjectDelete = new SubjectDeleteImpl(this.subjectPort);
-        this.subjectAll = new SubjectAllImpl(this.subjectPort);
-    }
+    @InjectMocks
+    private SubjectGeneralManagerImpl subjectGeneralManager;
 
     @Test
     @DisplayName("Creación de una asignatura.")
@@ -41,14 +34,10 @@ public class SubjectGeneralTest {
                 .name("Matemáticas")
                 .build();
 
-        this.subjectRegister.register(subject);
+        this.subjectGeneralManager.register(subject);
 
         // Mock
-        Mockito.when(this.subjectPort.getById(1)).thenReturn(subject);
-
-        Subject reply = this.subjectPort.getById(1);
-        Assertions.assertEquals(reply.getId(), subject.getId());
-        Assertions.assertEquals(reply.getName(), subject.getName());
+        Mockito.verify(this.subjectPort, Mockito.times(1)).save(subject);
 
     }
 
@@ -61,17 +50,10 @@ public class SubjectGeneralTest {
                 .name("Matemáticas")
                 .build();
 
-        this.subjectRegister.register(subject);
+        this.subjectGeneralManager.deleteById(subject.getId());
 
         // Mock
-        Mockito.when(this.subjectPort.getById(1)).thenReturn(subject);
-        Assertions.assertNotNull(this.subjectPort.getById(1));
-
-        this.subjectDelete.deleteById(subject.getId());
-
-        // Mock
-        Mockito.when(this.subjectPort.getById(1)).thenReturn(null);
-        Assertions.assertNull(this.subjectPort.getById(1));
+        Mockito.verify(this.subjectPort, Mockito.times(1)).deleteById(subject.getId());
 
     }
 
@@ -87,8 +69,8 @@ public class SubjectGeneralTest {
         // Mock
         Mockito.when(this.subjectPort.findAll()).thenReturn(Collections.singletonList(subject));
 
-        Assertions.assertNotNull(this.subjectAll.findAll());
-        Assertions.assertEquals(this.subjectAll.findAll().size(), 1);
+        Assertions.assertNotNull(this.subjectGeneralManager.findAll());
+        Assertions.assertEquals(this.subjectGeneralManager.findAll().size(), 1);
 
     }
 

@@ -1,10 +1,14 @@
 package com.university.notesystem.domain.usecases.subject;
 
-import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.entities.Subject;
 
-public interface SubjectRegister {
+import java.util.List;
 
+public interface SubjectGeneralManager {
+
+    List<Subject> findAll();
     void register(Subject subject);
+    void deleteById(int id);
+
 
 }

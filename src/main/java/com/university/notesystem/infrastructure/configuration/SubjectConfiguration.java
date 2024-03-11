@@ -19,18 +19,8 @@ public class SubjectConfiguration {
     private final SubjectStudentPort subjectStudentPort;
 
     @Bean
-    public SubjectAll subjectAll(){
-        return new SubjectAllImpl(this.subjectPort);
-    }
-
-    @Bean
-    public SubjectRegister subjectRegister(){
-        return new SubjectRegisterImpl(this.subjectPort);
-    }
-
-    @Bean
-    public SubjectDelete subjectDelete(){
-        return new SubjectDeleteImpl(this.subjectPort);
+    public SubjectGeneralManager subjectGeneralManager(){
+        return new SubjectGeneralManagerImpl(this.subjectPort);
     }
 
     @Bean

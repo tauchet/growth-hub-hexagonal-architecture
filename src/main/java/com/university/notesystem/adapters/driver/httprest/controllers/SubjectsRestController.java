@@ -17,20 +17,18 @@ import java.util.List;
 @RestController
 public class SubjectsRestController {
 
-    private final SubjectRegister subjectRegister;
-    private final SubjectAll subjectAll;
-    private final SubjectDelete subjectDelete;
+    private final SubjectGeneralManager subjectGeneralManager;
     private final SubjectRegisterStudent subjectRegisterStudent;
     private final SubjectUpdateStudentNotes subjectUpdateStudentNotes;
 
     @GetMapping("subjects")
     public ResponseEntity<SuccessResponse<List<Subject>>> onGetAll() {
-        return SuccessResponse.create(HttpStatus.OK, this.subjectAll.findAll());
+        return SuccessResponse.create(HttpStatus.OK, this.subjectGeneralManager.findAll());
     }
 
     @PostMapping("subjects")
     public ResponseEntity<SuccessResponse<Boolean>> onCreateSubject(@RequestBody CreateSubjectDTO body) {
-        this.subjectRegister.register(Subject.builder()
+        this.subjectGeneralManager.register(Subject.builder()
                 .id(body.getId())
                 .name(body.getName())
                 .build());
@@ -39,7 +37,7 @@ public class SubjectsRestController {
 
     @DeleteMapping("subjects/{id}")
     public ResponseEntity<SuccessResponse<Boolean>> onDeleteSubject(@PathVariable int id) {
-        this.subjectDelete.deleteById(id);
+        this.subjectGeneralManager.deleteById(id);
         return SuccessResponse.create(HttpStatus.OK, true);
     }
 
