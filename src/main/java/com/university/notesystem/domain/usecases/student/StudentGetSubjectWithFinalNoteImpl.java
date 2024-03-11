@@ -1,25 +1,31 @@
 package com.university.notesystem.domain.usecases.student;
 
+import com.university.notesystem.domain.exceptions.ResourceNotFoundException;
 import com.university.notesystem.domain.model.StudentWithAllFinalNoteModel;
 import com.university.notesystem.domain.model.SubjectStudentWithNotesModel;
+import com.university.notesystem.domain.model.SubjectWithFinalNoteModel;
+import com.university.notesystem.domain.model.SubjectWithNotesModel;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.mapper.SubjectWithFinalNoteDTOMapper;
+import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.groupingBy;
 
 @RequiredArgsConstructor
-public class StudentGetSubjectWithFinalNoteByAllImpl implements StudentGetSubjectWithFinalNoteByAll {
+public class StudentGetSubjectWithFinalNoteImpl implements StudentGetSubjectWithFinalNote {
 
+    private final StudentPort studentPort;
     private final SubjectStudentPort subjectStudentPort;
 
     @Override
     public List<StudentWithAllFinalNoteModel> getAll() {
-
         List<SubjectStudentWithNotesModel> allNotes = this.subjectStudentPort.findAllSubjectWithNotes();
         Map<Integer, List<SubjectStudentWithNotesModel>> mapByStudentId = allNotes.stream().collect(groupingBy(x -> x.getStudent().getId()));
 
@@ -37,6 +43,23 @@ public class StudentGetSubjectWithFinalNoteByAllImpl implements StudentGetSubjec
                                     .toList()
                     );
                 }).toList();
+    }
+
+    @Override
+    public List<SubjectWithFinalNoteModel> getAllByStudentIdOrCode(Integer id, Integer code) {
+
+        Student student = this.studentPort.getByIdOrCode(id, code);
+        if (student == null) {
+            throw new ResourceNotFoundException("Student", "No se ha encontrado el estudiante por el id (" + id + ") o código (" + code + ").");
+        }
+
+        List<SubjectWithNotesModel> notes = this.subjectStudentPort.findAllSubjectWithNotesByStudent(student.getId());
+        return notes
+                .stream()
+                .map(SubjectWithFinalNoteDTOMapper::mapToSubjectWithFinalNoteDTO)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+
     }
 
 }

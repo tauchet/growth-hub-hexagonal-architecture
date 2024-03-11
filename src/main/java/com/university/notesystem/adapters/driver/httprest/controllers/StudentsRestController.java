@@ -20,8 +20,7 @@ public class StudentsRestController {
 
     private final StudentGeneralManager studentGeneralManager;
     private final StudentGetAllSubjectWithNotes studentGetAllSubjectWithNotes;
-    private final StudentGetSubjectWithFinalNoteById studentGetSubjectWithFinalNoteById;
-    private final StudentGetSubjectWithFinalNoteByAll studentGetSubjectWithFinalNoteByAll;
+    private final StudentGetSubjectWithFinalNote studentGetSubjectWithFinalNote;
 
     @GetMapping("students")
     public ResponseEntity<SuccessResponse<List<Student>>> onGetAll() {
@@ -51,12 +50,12 @@ public class StudentsRestController {
 
     @GetMapping("students/{id}/final-notes")
     public ResponseEntity<SuccessResponse<List<SubjectWithFinalNoteModel>>> onGetAllFinalNotes(@PathVariable int id) {
-        return SuccessResponse.create(HttpStatus.OK, this.studentGetSubjectWithFinalNoteById.getAllByIdOrCode(id, id));
+        return SuccessResponse.create(HttpStatus.OK, this.studentGetSubjectWithFinalNote.getAllByStudentIdOrCode(id, id));
     }
 
     @GetMapping("students/final-notes")
     public ResponseEntity<SuccessResponse<List<StudentWithAllFinalNoteModel>>> onGetAllFinalNotes() {
-        return SuccessResponse.create(HttpStatus.OK, this.studentGetSubjectWithFinalNoteByAll.getAll());
+        return SuccessResponse.create(HttpStatus.OK, this.studentGetSubjectWithFinalNote.getAll());
     }
 
 }

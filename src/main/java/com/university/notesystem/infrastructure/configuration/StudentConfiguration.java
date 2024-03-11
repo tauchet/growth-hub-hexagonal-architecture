@@ -26,13 +26,9 @@ public class StudentConfiguration {
     }
 
     @Bean
-    public StudentGetSubjectWithFinalNoteById studentGetAllSubjectWithFinalNote(){
-        return new StudentGetSubjectWithFinalNoteByIdImpl(this.studentPort, this.subjectStudentPort);
+    public StudentGetSubjectWithFinalNote studentGetSubjectWithFinalNote(){
+        return new StudentGetSubjectWithFinalNoteImpl(this.studentPort, this.subjectStudentPort);
     }
 
-    @Bean
-    public StudentGetSubjectWithFinalNoteByAll studentGetSubjectWithFinalNoteByAll(){
-        return new StudentGetSubjectWithFinalNoteByAllImpl(this.subjectStudentPort);
-    }
 
 }
