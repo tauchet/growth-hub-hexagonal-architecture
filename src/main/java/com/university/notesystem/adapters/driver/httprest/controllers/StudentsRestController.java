@@ -2,9 +2,9 @@ package com.university.notesystem.adapters.driver.httprest.controllers;
 
 import com.university.notesystem.adapters.driver.httprest.dtos.CreateStudentDTO;
 import com.university.notesystem.adapters.driver.httprest.responses.SuccessResponse;
-import com.university.notesystem.domain.model.dtos.StudentWithAllFinalNoteDTO;
-import com.university.notesystem.domain.model.SubjectWithFinalNote;
-import com.university.notesystem.domain.model.dtos.SubjectWithNotesDTO;
+import com.university.notesystem.domain.model.StudentWithAllFinalNoteModel;
+import com.university.notesystem.domain.model.SubjectWithFinalNoteModel;
+import com.university.notesystem.domain.model.SubjectWithNotesModel;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.usecases.student.*;
 import lombok.RequiredArgsConstructor;
@@ -45,17 +45,17 @@ public class StudentsRestController {
     }
 
     @GetMapping("students/{id}/notes")
-    public ResponseEntity<SuccessResponse<List<SubjectWithNotesDTO>>> onGetAllNotes(@PathVariable int id) {
+    public ResponseEntity<SuccessResponse<List<SubjectWithNotesModel>>> onGetAllNotes(@PathVariable int id) {
         return SuccessResponse.create(HttpStatus.OK, this.studentGetAllSubjectWithNotes.getAllByIdOrCode(id, id));
     }
 
     @GetMapping("students/{id}/final-notes")
-    public ResponseEntity<SuccessResponse<List<SubjectWithFinalNote>>> onGetAllFinalNotes(@PathVariable int id) {
+    public ResponseEntity<SuccessResponse<List<SubjectWithFinalNoteModel>>> onGetAllFinalNotes(@PathVariable int id) {
         return SuccessResponse.create(HttpStatus.OK, this.studentGetSubjectWithFinalNoteById.getAllByIdOrCode(id, id));
     }
 
     @GetMapping("students/final-notes")
-    public ResponseEntity<SuccessResponse<List<StudentWithAllFinalNoteDTO>>> onGetAllFinalNotes() {
+    public ResponseEntity<SuccessResponse<List<StudentWithAllFinalNoteModel>>> onGetAllFinalNotes() {
         return SuccessResponse.create(HttpStatus.OK, this.studentGetSubjectWithFinalNoteByAll.getAll());
     }
 

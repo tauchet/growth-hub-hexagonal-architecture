@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-public class SubjectWithFinalNote {
+public class SubjectWithFinalNoteModel {
 
     private int id;
     private String name;

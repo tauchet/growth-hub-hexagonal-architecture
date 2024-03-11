@@ -2,7 +2,6 @@ package com.university.notesystem.adapters.driven.h2dbadapter.service;
 
 import com.university.notesystem.adapters.driven.h2dbadapter.mapper.StudentMapper;
 import com.university.notesystem.adapters.driven.h2dbadapter.repository.StudentRepository;
-import com.university.notesystem.domain.model.dtos.SubjectWithNotesDTO;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.ports.StudentPort;
 import lombok.RequiredArgsConstructor;

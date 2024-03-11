@@ -1,4 +1,4 @@
-package com.university.notesystem.domain.model.dtos;
+package com.university.notesystem.domain.model;
 
 import lombok.*;
 
@@ -9,10 +9,10 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @ToString
-public class SubjectWithNotesDTO {
+public class SubjectWithNotesModel {
 
     private int id;
     private String name;
-    private List<SimpleNoteDTO> notes;
+    private List<SimpleNoteModel> notes;
 
 }

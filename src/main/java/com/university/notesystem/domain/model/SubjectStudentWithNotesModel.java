@@ -1,4 +1,4 @@
-package com.university.notesystem.domain.model.dtos;
+package com.university.notesystem.domain.model;
 
 import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Student;
@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @ToString
-public class SubjectStudentWithNotesDTO {
+public class SubjectStudentWithNotesModel {
 
     private int id;
     private Subject subject;

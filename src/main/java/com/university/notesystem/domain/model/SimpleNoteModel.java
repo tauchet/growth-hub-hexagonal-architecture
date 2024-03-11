@@ -1,4 +1,4 @@
-package com.university.notesystem.domain.model.dtos;
+package com.university.notesystem.domain.model;
 
 import lombok.*;
 
@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @ToString
-public class SimpleNoteDTO {
+public class SimpleNoteModel {
 
     private Integer id;
     private Integer number;

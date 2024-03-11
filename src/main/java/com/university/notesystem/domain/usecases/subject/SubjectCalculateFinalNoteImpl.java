@@ -1,6 +1,6 @@
 package com.university.notesystem.domain.usecases.subject;
 
-import com.university.notesystem.domain.model.SubjectWithFinalNote;
+import com.university.notesystem.domain.model.SubjectWithFinalNoteModel;
 import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Subject;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class SubjectCalculateFinalNoteImpl implements SubjectCalculateFinalNote {
 
     @Override
-    public SubjectWithFinalNote calculateBySubjectAndNotes(Subject subject, List<Note> notes) {
+    public SubjectWithFinalNoteModel calculateBySubjectAndNotes(Subject subject, List<Note> notes) {
 
         if (notes.size() < 3) {
             return null;
@@ -23,7 +23,7 @@ public class SubjectCalculateFinalNoteImpl implements SubjectCalculateFinalNote 
         }
         decimal = decimal.divide(new BigDecimal(notes.size()), new MathContext(5));
 
-        return new SubjectWithFinalNote(
+        return new SubjectWithFinalNoteModel(
                 subject.getId(),
                 subject.getName(),
                 decimal.doubleValue()

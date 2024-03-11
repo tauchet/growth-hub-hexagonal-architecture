@@ -1,15 +1,15 @@
 package com.university.notesystem.adapters.driven.h2dbadapter.mapper;
 
 import com.university.notesystem.adapters.driven.h2dbadapter.entities.NoteEntity;
-import com.university.notesystem.domain.model.dtos.SimpleNoteDTO;
+import com.university.notesystem.domain.model.SimpleNoteModel;
 import com.university.notesystem.domain.model.entities.Note;
 
 import java.util.Optional;
 
 public class NoteMapper {
 
-    public static SimpleNoteDTO mapToSimpleNoteDTO(NoteEntity note) {
-        return SimpleNoteDTO.builder()
+    public static SimpleNoteModel mapToSimpleNoteDTO(NoteEntity note) {
+        return SimpleNoteModel.builder()
                 .note(note.getNote())
                 .number(note.getNumber())
                 .id(note.getId())

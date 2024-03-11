@@ -1,7 +1,7 @@
 package com.university.notesystem.domain.usecases.student;
 
-import com.university.notesystem.domain.model.dtos.StudentWithAllFinalNoteDTO;
-import com.university.notesystem.domain.model.dtos.SubjectStudentWithNotesDTO;
+import com.university.notesystem.domain.model.StudentWithAllFinalNoteModel;
+import com.university.notesystem.domain.model.SubjectStudentWithNotesModel;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.mapper.SubjectWithFinalNoteDTOMapper;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
@@ -18,17 +18,17 @@ public class StudentGetSubjectWithFinalNoteByAllImpl implements StudentGetSubjec
     private final SubjectStudentPort subjectStudentPort;
 
     @Override
-    public List<StudentWithAllFinalNoteDTO> getAll() {
+    public List<StudentWithAllFinalNoteModel> getAll() {
 
-        List<SubjectStudentWithNotesDTO> allNotes = this.subjectStudentPort.findAllSubjectWithNotes();
-        Map<Integer, List<SubjectStudentWithNotesDTO>> mapByStudentId = allNotes.stream().collect(groupingBy(x -> x.getStudent().getId()));
+        List<SubjectStudentWithNotesModel> allNotes = this.subjectStudentPort.findAllSubjectWithNotes();
+        Map<Integer, List<SubjectStudentWithNotesModel>> mapByStudentId = allNotes.stream().collect(groupingBy(x -> x.getStudent().getId()));
 
         return mapByStudentId
                 .values()
                 .stream()
                 .map(notes -> {
                     Student student = notes.get(0).getStudent();
-                    return new StudentWithAllFinalNoteDTO(
+                    return new StudentWithAllFinalNoteModel(
                             student.getId(),
                             student.getName(),
                             notes

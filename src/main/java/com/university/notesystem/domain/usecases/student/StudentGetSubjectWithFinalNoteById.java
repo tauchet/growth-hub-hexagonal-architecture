@@ -1,11 +1,11 @@
 package com.university.notesystem.domain.usecases.student;
 
-import com.university.notesystem.domain.model.SubjectWithFinalNote;
+import com.university.notesystem.domain.model.SubjectWithFinalNoteModel;
 
 import java.util.List;
 
 public interface StudentGetSubjectWithFinalNoteById {
 
-    List<SubjectWithFinalNote> getAllByIdOrCode(Integer id, Integer code);
+    List<SubjectWithFinalNoteModel> getAllByIdOrCode(Integer id, Integer code);
 
 }
