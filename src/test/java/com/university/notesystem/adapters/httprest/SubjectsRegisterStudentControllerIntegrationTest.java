@@ -34,7 +34,7 @@ public class SubjectsRegisterStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Registrar estudiante con valores erroneos.")
-    public void onStudentCreateWhenBodyIsFail() throws Exception {
+    public void onStudentRegisterWhenBodyIsFail() throws Exception {
         this.mvc
                 .perform(
                         MockMvcRequestBuilders
@@ -54,7 +54,7 @@ public class SubjectsRegisterStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Registrar estudiante con valores correctos cuando no existe el estudiante.")
-    public void onStudentCreateWhenBodyIsFail2() throws Exception {
+    public void onStudentRegisterWhenStudentNotExists() throws Exception {
         this.mvc
                 .perform(
                         MockMvcRequestBuilders
@@ -74,7 +74,7 @@ public class SubjectsRegisterStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Registrar estudiante con valores correctos cuando no existe la asignatura.")
-    public void onStudentCreateWhenBodyIsFail3() throws Exception {
+    public void onStudentRegisterWhenSubjectNotExists() throws Exception {
 
         this.mvc
                 .perform(
@@ -108,7 +108,7 @@ public class SubjectsRegisterStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Registrar estudiante sin notas.")
-    public void onStudentCreateWhenBodyIsFail4() throws Exception {
+    public void onStudentRegisterWhenBodyNotesIsEmpty() throws Exception {
 
         this.mvc
                 .perform(
@@ -154,7 +154,7 @@ public class SubjectsRegisterStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Registrar estudiante con notas fuera de limite.")
-    public void onStudentCreateWhenBodyIsFail5() throws Exception {
+    public void onStudentRegisterWhenBodyNotesIsLimitBroken() throws Exception {
 
         this.mvc
                 .perform(
@@ -204,7 +204,7 @@ public class SubjectsRegisterStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Registrar estudiante con notas.")
-    public void onStudentCreateWhenBodyIsFail6() throws Exception {
+    public void onStudentRegister() throws Exception {
 
         this.mvc
                 .perform(

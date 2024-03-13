@@ -35,7 +35,7 @@ public class StudentsGetAllFinalNotesByIdControllerIntegrationTest {
 
     @Test
     @DisplayName("Buscar notas finales por todos los estudiantes.")
-    public void onStudentCreate() throws Exception {
+    public void onStudentGetAllFinalNotes() throws Exception {
 
         this.mvc.perform(MockMvcRequestBuilders
                 .post("/students")

@@ -37,7 +37,7 @@ public class StudentsGetFinalNotesByIdControllerIntegrationTest {
     @Test
     @Priority(0)
     @DisplayName("Buscar notas finales por un estudiante que no existe.")
-    public void onStudentCreateWhenBodyIsFail() throws Exception {
+    public void onStudentGetAllNotesByIdWhenNotExists() throws Exception {
         this.mvc
                 .perform(
                         MockMvcRequestBuilders
@@ -49,14 +49,10 @@ public class StudentsGetFinalNotesByIdControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.extra.resource", Is.is("Student")));
     }
 
-    @Autowired
-    private NoteRepository noteRepository;
-
-
     @Test
     @Priority(1)
     @DisplayName("Buscar notas finales por un estudiante.")
-    public void onStudentCreateWhenBodyIsFail2() throws Exception {
+    public void onStudentGetAllNotesById() throws Exception {
 
         this.mvc.perform(MockMvcRequestBuilders
                 .post("/students")

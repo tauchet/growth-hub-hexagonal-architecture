@@ -77,7 +77,7 @@ public class StudentsGeneralControllerIntegrationTest {
 
     @Test
     @DisplayName("Crear un estudiante cuando ya existe otro con la id o código.")
-    public void onStudentCreateSuccessFail() throws Exception {
+    public void onStudentCreateFailWithIdOrCodeUsed() throws Exception {
 
         this.mvc
                 .perform(

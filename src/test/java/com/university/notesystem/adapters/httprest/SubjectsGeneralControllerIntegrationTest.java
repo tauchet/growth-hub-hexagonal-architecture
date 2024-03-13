@@ -55,7 +55,7 @@ public class SubjectsGeneralControllerIntegrationTest {
 
     @Test
     @DisplayName("Crear una asignatura.")
-    public void onStudentCreateSuccess() throws Exception {
+    public void onSubjectCreateSuccess() throws Exception {
         this.mvc
                 .perform(
                         MockMvcRequestBuilders
@@ -75,7 +75,7 @@ public class SubjectsGeneralControllerIntegrationTest {
 
     @Test
     @DisplayName("Crear una asignatura cuando ya existe otro con la misma id.")
-    public void onStudentCreateSuccessFail() throws Exception {
+    public void onSubjectCreateSuccessFail() throws Exception {
 
         this.mvc
                 .perform(
@@ -124,7 +124,7 @@ public class SubjectsGeneralControllerIntegrationTest {
 
     @Test
     @DisplayName("Obtener todas las asignaturas.")
-    public void onGetAllStudents() throws Exception {
+    public void onGetAllSubjects() throws Exception {
 
         // Create student
         this.mvc

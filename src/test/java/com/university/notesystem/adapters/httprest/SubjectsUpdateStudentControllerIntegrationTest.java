@@ -33,7 +33,7 @@ public class SubjectsUpdateStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Actualizar estudiante con valores erroneos.")
-    public void onStudentCreateWhenBodyIsFail() throws Exception {
+    public void onStudentUpdateWhenBodyIsFail() throws Exception {
         this.mvc
                 .perform(
                         MockMvcRequestBuilders
@@ -53,7 +53,7 @@ public class SubjectsUpdateStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Actualizar estudiante sin notas.")
-    public void onStudentCreateWhenBodyIsFail2dw() throws Exception {
+    public void onStudentUpdateWhenBodyWithoutNotes() throws Exception {
         this.mvc
                 .perform(
                         MockMvcRequestBuilders
@@ -73,7 +73,7 @@ public class SubjectsUpdateStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Actualizar estudiantes con valores correctos cuando no existe el estudiante.")
-    public void onStudentCreateWhenBodyIsFail2() throws Exception {
+    public void onStudentUpdateWhenStudentNotExists() throws Exception {
         this.mvc
                 .perform(
                         MockMvcRequestBuilders
@@ -96,7 +96,7 @@ public class SubjectsUpdateStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Actualizar estudiante con valores correctos cuando no existe la asignatura.")
-    public void onStudentCreateWhenBodyIsFail3() throws Exception {
+    public void onStudentUpdateWhenSubjectNotExists() throws Exception {
 
         this.mvc
                 .perform(
@@ -134,7 +134,7 @@ public class SubjectsUpdateStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Actualizar estudiante con notas fuera de limite.")
-    public void onStudentCreateWhenBodyIsFail5() throws Exception {
+    public void onStudentUpdateWhenNotesBroken() throws Exception {
 
         this.mvc
                 .perform(
@@ -184,7 +184,7 @@ public class SubjectsUpdateStudentControllerIntegrationTest {
 
     @Test
     @DisplayName("Actualizar estudiante con notas.")
-    public void onStudentCreateWhenBodyIsFail6() throws Exception {
+    public void onStudentUpdate() throws Exception {
 
         this.mvc
                 .perform(
