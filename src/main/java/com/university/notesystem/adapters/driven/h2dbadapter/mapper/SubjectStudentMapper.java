@@ -10,16 +10,16 @@ public class SubjectStudentMapper {
     public static SubjectStudentEntity mapToSubjectStudentEntity(SubjectStudent subject) {
         return SubjectStudentEntity.builder()
                 .id(subject.getId())
-                .student(Optional.of(subject.getStudent()).map(StudentMapper::mapToStudentEntity).orElse(null))
-                .subject(Optional.of(subject.getSubject()).map(SubjectMapper::mapToSubjectEntity).orElse(null))
+                .student(Optional.ofNullable(subject.getStudent()).map(StudentMapper::mapToStudentEntity).orElse(null))
+                .subject(Optional.ofNullable(subject.getSubject()).map(SubjectMapper::mapToSubjectEntity).orElse(null))
                 .build();
     }
 
     public static SubjectStudent mapToSubjectStudent(SubjectStudentEntity subject) {
         return SubjectStudent.builder()
                 .id(subject.getId())
-                .student(Optional.of(subject.getStudent()).map(StudentMapper::mapToStudent).orElse(null))
-                .subject(Optional.of(subject.getSubject()).map(SubjectMapper::mapToSubject).orElse(null))
+                .student(Optional.ofNullable(subject.getStudent()).map(StudentMapper::mapToStudent).orElse(null))
+                .subject(Optional.ofNullable(subject.getSubject()).map(SubjectMapper::mapToSubject).orElse(null))
                 .build();
     }
 

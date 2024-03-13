@@ -10,6 +10,7 @@ public interface StudentPort {
     void save(Student student);
     void deleteById(int id);
     boolean existsByIdOrCode(Integer id, Integer code);
+
     List<Student> findAll();
 
 }

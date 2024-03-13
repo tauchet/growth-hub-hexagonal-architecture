@@ -15,6 +15,7 @@ import com.university.notesystem.domain.model.entities.SubjectStudent;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +27,7 @@ public class SubjectStudentService implements SubjectStudentPort {
     private final SubjectStudentRepository subjectStudentRepository;
 
     @Override
-    public SubjectStudent getByStudentIdOrCodeAndSubjectId(int studentId, int subjectId) {
+    public SubjectStudent getByStudentIdAndSubjectId(int studentId, int subjectId) {
         return this.subjectStudentRepository.getByStudentAndSubject(
                 StudentEntity.builder().id(studentId).build(),
                 SubjectEntity.builder().id(subjectId).build()
@@ -45,9 +46,9 @@ public class SubjectStudentService implements SubjectStudentPort {
                 .stream()
                 .map(subjectStudent -> new SubjectStudentWithNotesModel(
                         subjectStudent.getId(),
-                        Optional.of(subjectStudent.getSubject()).map(SubjectMapper::mapToSubject).orElse(null),
-                        Optional.of(subjectStudent.getStudent()).map(StudentMapper::mapToStudent).orElse(null),
-                        subjectStudent.getNotes().stream().map(NoteMapper::mapToNote).toList()
+                        Optional.ofNullable(subjectStudent.getSubject()).map(SubjectMapper::mapToSubject).orElse(null),
+                        Optional.ofNullable(subjectStudent.getStudent()).map(StudentMapper::mapToStudent).orElse(null),
+                        Optional.ofNullable(subjectStudent.getNotes()).map(x -> x.stream().map(NoteMapper::mapToNote).toList()).orElse(null)
                 ))
                 .toList();
     }
@@ -60,11 +61,13 @@ public class SubjectStudentService implements SubjectStudentPort {
                 .map(subject -> new SubjectWithNotesModel(
                         subject.getSubject().getId(),
                         subject.getSubject().getName(),
-                        subject.getNotes()
-                                .stream()
-                                .map(NoteMapper::mapToSimpleNoteDTO)
-                                .sorted(Comparator.comparingInt(SimpleNoteModel::getNumber))
-                                .toList()
+                        Optional.ofNullable(subject.getNotes())
+                                .map(x -> x
+                                        .stream()
+                                        .map(NoteMapper::mapToSimpleNoteDTO)
+                                        .sorted(Comparator.comparingInt(SimpleNoteModel::getNumber))
+                                        .toList())
+                                .orElse(Collections.emptyList())
                 ))
                 .collect(Collectors.toList());
     }

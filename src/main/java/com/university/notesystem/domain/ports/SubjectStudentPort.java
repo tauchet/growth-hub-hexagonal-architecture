@@ -9,7 +9,7 @@ import java.util.List;
 public interface SubjectStudentPort {
 
     SubjectStudent save(SubjectStudent subject);
-    SubjectStudent getByStudentIdOrCodeAndSubjectId(int studentId, int subjectId);
+    SubjectStudent getByStudentIdAndSubjectId(int studentId, int subjectId);
     List<SubjectWithNotesModel> findAllSubjectWithNotesByStudent(int studentId);
     List<SubjectStudentWithNotesModel> findAllSubjectWithNotes();
     boolean existsByStudentAndSubject(int studentId, int subjectId);

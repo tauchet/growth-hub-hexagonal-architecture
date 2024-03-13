@@ -34,7 +34,7 @@ public class SubjectUpdateStudentNotesImpl implements SubjectUpdateStudentNotes,
             throw new ResourceNotFoundException("Subject", "No se ha encontrado la asignatura por el id (" + data.getSubjectId() + ").");
         }
 
-        SubjectStudent register = this.subjectStudentPort.getByStudentIdOrCodeAndSubjectId(student.getId(), data.getSubjectId());
+        SubjectStudent register = this.subjectStudentPort.getByStudentIdAndSubjectId(student.getId(), data.getSubjectId());
         if (register == null) {
             throw new ResourceNotFoundException("SubjectStudent", "No se ha encontrado el registro a la asignatura indicada.");
         }

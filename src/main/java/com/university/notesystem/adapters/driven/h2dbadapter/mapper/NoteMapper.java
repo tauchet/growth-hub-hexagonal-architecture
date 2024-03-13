@@ -21,7 +21,7 @@ public class NoteMapper {
                 .id(note.getId())
                 .number(note.getNumber())
                 .note(note.getNote())
-                .subjectStudent(Optional.of(note.getSubjectStudent()).map(SubjectStudentMapper::mapToSubjectStudentEntity).orElse(null))
+                .subjectStudent(Optional.ofNullable(note.getSubjectStudent()).map(SubjectStudentMapper::mapToSubjectStudentEntity).orElse(null))
                 .build();
     }
 
@@ -30,7 +30,7 @@ public class NoteMapper {
                 .id(noteEntity.getId())
                 .number(noteEntity.getNumber())
                 .note(noteEntity.getNote())
-                .subjectStudent(Optional.of(noteEntity.getSubjectStudent()).map(SubjectStudentMapper::mapToSubjectStudent).orElse(null))
+                .subjectStudent(Optional.ofNullable(noteEntity.getSubjectStudent()).map(SubjectStudentMapper::mapToSubjectStudent).orElse(null))
                 .build();
     }
 
