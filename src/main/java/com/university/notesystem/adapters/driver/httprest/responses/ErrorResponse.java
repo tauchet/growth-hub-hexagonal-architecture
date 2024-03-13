@@ -36,7 +36,7 @@ public class ErrorResponse {
         return this;
     }
 
-    public ResponseEntity<ErrorResponse> toEntity() {
+    public ResponseEntity<Object> toEntity() {
         return new ResponseEntity<>(this, HttpStatusCode.valueOf(this.status));
     }
 

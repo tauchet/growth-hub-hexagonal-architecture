@@ -7,6 +7,7 @@ import com.university.notesystem.domain.model.SubjectWithFinalNoteModel;
 import com.university.notesystem.domain.model.SubjectWithNotesModel;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.usecases.student.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +29,7 @@ public class StudentsRestController {
     }
 
     @PostMapping("students")
-    public ResponseEntity<SuccessResponse<Boolean>> onCreateStudent(@RequestBody CreateStudentDTO body) {
+    public ResponseEntity<SuccessResponse<Boolean>> onCreateStudent(@RequestBody @Valid CreateStudentDTO body) {
         this.studentGeneralManager.register(Student.builder()
                 .id(body.getId())
                 .code(body.getCode())

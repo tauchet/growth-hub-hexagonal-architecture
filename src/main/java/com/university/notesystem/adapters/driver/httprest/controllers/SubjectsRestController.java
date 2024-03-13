@@ -1,11 +1,14 @@
 package com.university.notesystem.adapters.driver.httprest.controllers;
 
 import com.university.notesystem.adapters.driver.httprest.dtos.CreateSubjectDTO;
+import com.university.notesystem.adapters.driver.httprest.dtos.SubjectRegisterStudentDTO;
+import com.university.notesystem.adapters.driver.httprest.dtos.SubjectUpdateStudentDTO;
 import com.university.notesystem.adapters.driver.httprest.responses.SuccessResponse;
 import com.university.notesystem.domain.model.entities.Subject;
 import com.university.notesystem.domain.model.request.SubjectRegisterStudentRequest;
 import com.university.notesystem.domain.model.request.SubjectUpdateStudentNotesRequest;
 import com.university.notesystem.domain.usecases.subject.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +30,7 @@ public class SubjectsRestController {
     }
 
     @PostMapping("subjects")
-    public ResponseEntity<SuccessResponse<Boolean>> onCreateSubject(@RequestBody CreateSubjectDTO body) {
+    public ResponseEntity<SuccessResponse<Boolean>> onCreateSubject(@RequestBody @Valid CreateSubjectDTO body) {
         this.subjectGeneralManager.register(Subject.builder()
                 .id(body.getId())
                 .name(body.getName())
@@ -43,17 +46,29 @@ public class SubjectsRestController {
 
     @PostMapping("subjects/{id}/students")
     public ResponseEntity<SuccessResponse<Boolean>> onDeleteSubject(@PathVariable int id,
-                                                                    @RequestBody SubjectRegisterStudentRequest request) {
-        request.setSubjectId(id);
-        this.subjectRegisterStudent.register(request);
-        return SuccessResponse.create(HttpStatus.OK, true);
+                                                                    @RequestBody @Valid SubjectRegisterStudentDTO request) {
+        this.subjectRegisterStudent.register(
+                SubjectRegisterStudentRequest
+                        .builder()
+                        .studentId(request.getStudentId())
+                        .subjectId(id)
+                        .notes(request.getNotes())
+                        .build()
+        );
+        return SuccessResponse.create(HttpStatus.CREATED, true);
     }
 
     @PutMapping("subjects/{id}/update-notes")
     public ResponseEntity<SuccessResponse<Boolean>> onUpdateNotes(@PathVariable int id,
-                                                                  @RequestBody SubjectUpdateStudentNotesRequest request) {
-        request.setSubjectId(id);
-        this.subjectUpdateStudentNotes.update(request);
+                                                                  @RequestBody @Valid SubjectUpdateStudentDTO request) {
+        this.subjectUpdateStudentNotes.update(
+                SubjectUpdateStudentNotesRequest
+                        .builder()
+                        .studentId(request.getStudentId())
+                        .subjectId(id)
+                        .notes(request.getNotes())
+                        .build()
+        );
         return SuccessResponse.create(HttpStatus.OK, true);
     }
 
