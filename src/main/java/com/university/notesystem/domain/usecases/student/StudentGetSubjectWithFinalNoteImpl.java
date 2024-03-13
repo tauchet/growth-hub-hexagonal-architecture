@@ -6,10 +6,10 @@ import com.university.notesystem.domain.model.SubjectStudentWithNotesModel;
 import com.university.notesystem.domain.model.SubjectWithFinalNoteModel;
 import com.university.notesystem.domain.model.SubjectWithNotesModel;
 import com.university.notesystem.domain.model.entities.Student;
-import com.university.notesystem.domain.model.mapper.SubjectWithFinalNoteDTOMapper;
 import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
 import com.university.notesystem.domain.usecases.UseCase;
+import com.university.notesystem.domain.usecases.subject.SubjectCalculateFinalNote;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -24,6 +24,7 @@ public class StudentGetSubjectWithFinalNoteImpl implements StudentGetSubjectWith
 
     private final StudentPort studentPort;
     private final SubjectStudentPort subjectStudentPort;
+    private final SubjectCalculateFinalNote calculateFinalNote;
 
     @Override
     public List<SubjectWithFinalNoteModel> getAllByStudentIdOrCode(Integer id, Integer code) {
@@ -36,7 +37,7 @@ public class StudentGetSubjectWithFinalNoteImpl implements StudentGetSubjectWith
         List<SubjectWithNotesModel> notes = this.subjectStudentPort.findAllSubjectWithNotesByStudent(student.getId());
         return notes
                 .stream()
-                .map(SubjectWithFinalNoteDTOMapper::mapToSubjectWithFinalNoteDTO)
+                .map(this.calculateFinalNote::calculate)
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
@@ -57,7 +58,7 @@ public class StudentGetSubjectWithFinalNoteImpl implements StudentGetSubjectWith
                             student.getName(),
                             notes
                                     .stream()
-                                    .map(x -> SubjectWithFinalNoteDTOMapper.mapToSubjectWithFinalNoteDTO(x.getSubject(), x.getNotes()))
+                                    .map(x -> calculateFinalNote.calculate(x.getSubject(), x.getNotes()))
                                     .filter(Objects::nonNull)
                                     .toList()
                     );
