@@ -13,7 +13,7 @@ import lombok.Setter;
 public class CreateSubjectDTO {
 
     @NotNull
-    private int id;
+    private Integer id;
 
     @NotNull
     private String name;

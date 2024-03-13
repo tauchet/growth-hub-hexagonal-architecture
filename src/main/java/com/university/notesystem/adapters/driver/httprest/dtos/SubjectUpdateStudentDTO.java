@@ -18,7 +18,7 @@ import java.util.List;
 public class SubjectUpdateStudentDTO {
 
     @NotNull
-    private int studentId;
+    private Integer studentId;
 
     @NotNull
     @NotEmpty

@@ -14,7 +14,7 @@ public class SubjectWithFinalNoteDTOMapper {
 
     public static SubjectWithFinalNoteModel mapToSubjectWithFinalNoteDTO(Subject subject, List<Note> notes) {
 
-        if (notes.size() < 3) {
+        if (notes == null || notes.size() < 3) {
             return null;
         }
 
@@ -34,7 +34,7 @@ public class SubjectWithFinalNoteDTOMapper {
 
     public static SubjectWithFinalNoteModel mapToSubjectWithFinalNoteDTO(SubjectWithNotesModel dto) {
 
-        if (dto.getNotes().size() < 3) {
+        if (dto.getNotes() == null || dto.getNotes().size() < 3) {
             return null;
         }
 

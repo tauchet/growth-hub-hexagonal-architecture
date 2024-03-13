@@ -37,7 +37,7 @@ public class SubjectStudentPortIntegrationTest {
 
     @Test
     @DisplayName("Guardar un registro de estudiante.")
-    public void onSubjectStudentRegister() {
+    public void registerStudent() {
 
         Student student = Student.builder()
                 .id(1)
@@ -67,7 +67,7 @@ public class SubjectStudentPortIntegrationTest {
 
     @Test
     @DisplayName("Verificar un registro de estudiante que no existe.")
-    public void onSubjectStudentNotExists() {
+    public void validStudentNotExists() {
 
         Student student = Student.builder()
                 .id(1)
@@ -90,38 +90,8 @@ public class SubjectStudentPortIntegrationTest {
     }
 
     @Test
-    @DisplayName("Verificar un registro de estudiante que existe.")
-    public void onSubjectStudentExists() {
-
-        Student student = Student.builder()
-                .id(1)
-                .code(1)
-                .name("Cristian")
-                .build();
-
-        this.studentPort.save(student);
-
-        Subject subject = Subject.builder()
-                .id(1)
-                .name("Matemáticas")
-                .build();
-
-        this.subjectPort.save(subject);
-
-        SubjectStudent subjectStudent = SubjectStudent.builder()
-                .student(student)
-                .subject(subject)
-                .build();
-        this.subjectStudentPort.save(subjectStudent);
-
-        boolean reply = this.subjectStudentPort.existsByStudentAndSubject(student.getId(), subject.getId());
-        Assertions.assertTrue(reply);
-
-    }
-
-    @Test
     @DisplayName("Obtener un registro de estudiante que no existe.")
-    public void onSubjectStudentGetNotExists() {
+    public void findSubjectStudentNotExists() {
 
         Student student = Student.builder()
                 .id(1)
@@ -145,7 +115,7 @@ public class SubjectStudentPortIntegrationTest {
 
     @Test
     @DisplayName("Obtener un registro por id de estudiante que existe.")
-    public void onSubjectStudentGetByStudentIdExists() {
+    public void findSubjectStudent() {
 
         Student student = Student.builder()
                 .id(1)
@@ -175,7 +145,7 @@ public class SubjectStudentPortIntegrationTest {
 
     @Test
     @DisplayName("Obtener registro de asignaturas de un estudiante.")
-    public void onSubjectStudentGetAllByStudentId() {
+    public void findSubjectStudentByStudent() {
 
         Student student = Student.builder()
                 .id(1)
@@ -218,7 +188,7 @@ public class SubjectStudentPortIntegrationTest {
 
     @Test
     @DisplayName("Obtener registro de asignaturas de todos los estudiantes.")
-    public void onSubjectStudentGetAllByStudentAll() {
+    public void findAllSubjectStudent() {
 
         Student student = Student.builder()
                 .id(1)

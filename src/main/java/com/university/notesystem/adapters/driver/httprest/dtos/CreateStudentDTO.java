@@ -13,10 +13,10 @@ import lombok.Setter;
 public class CreateStudentDTO {
 
     @NotNull
-    private int id;
+    private Integer id;
 
     @NotNull
-    private int code;
+    private Integer code;
 
     @NotNull
     private String name;

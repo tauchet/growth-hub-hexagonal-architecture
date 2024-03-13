@@ -26,7 +26,7 @@ public class StudentPortIntegrationTest {
 
     @Test
     @DisplayName("Guardar un estudiante.")
-    public void onStudentCreateOrGet() {
+    public void saveStudent() {
 
         Student student = Student.builder()
                 .id(1)
@@ -46,7 +46,7 @@ public class StudentPortIntegrationTest {
 
     @Test
     @DisplayName("No debe existir un usuario anterior no ingresado.")
-    public void onStudentNotExists() {
+    public void checkStudentNotExists() {
 
         // Checks
         Boolean replyById = this.studentPort.existsByIdOrCode(1, null);
@@ -59,7 +59,7 @@ public class StudentPortIntegrationTest {
 
     @Test
     @DisplayName("Debe existir un usuario anteriormente creado.")
-    public void onStudentExists() {
+    public void checkStudentExists() {
 
         Student student = Student.builder()
                 .id(1)
@@ -80,7 +80,7 @@ public class StudentPortIntegrationTest {
 
     @Test
     @DisplayName("Buscar estudiante por id o codigo que no existe.")
-    public void onStudentGetByIdOrCodeNotExists() {
+    public void findStudentByIdOrCodeWhenNotExists() {
 
         // Checks
         Student replyById = this.studentPort.getByIdOrCode(1, null);
@@ -93,7 +93,7 @@ public class StudentPortIntegrationTest {
 
     @Test
     @DisplayName("Buscar estudiante por id o codigo")
-    public void onStudentGetByIdOrCode() {
+    public void findStudentByIdOrCode() {
 
         Student student = Student.builder()
                 .id(1)
@@ -118,7 +118,7 @@ public class StudentPortIntegrationTest {
 
     @Test
     @DisplayName("Eliminar un estudiante.")
-    public void onStudentRemove() {
+    public void deleteStudent() {
 
         Student student = Student.builder()
                 .id(1)
@@ -137,7 +137,7 @@ public class StudentPortIntegrationTest {
 
     @Test
     @DisplayName("Obtener todos los estudiantes.")
-    public void onGetAllStudent() {
+    public void findAllStudent() {
 
 
         this.studentPort.save(Student.builder()

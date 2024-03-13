@@ -25,7 +25,7 @@ public class SubjectPortIntegrationTest {
 
     @Test
     @DisplayName("Guardar una asignatura.")
-    public void onSubjectCreateOrGet() {
+    public void saveSubject() {
 
         Subject subject = Subject.builder()
                 .id(1)
@@ -43,7 +43,7 @@ public class SubjectPortIntegrationTest {
 
     @Test
     @DisplayName("No debe existir una asignatura anterior no ingresada.")
-    public void onSubjectNotExists() {
+    public void checkSubjectNotExists() {
 
         // Checks
         Boolean replyById = this.subjectPort.existsById(1);
@@ -54,7 +54,7 @@ public class SubjectPortIntegrationTest {
 
     @Test
     @DisplayName("Debe existir una asignatura anteriormente creada.")
-    public void onSubjectExists() {
+    public void checkSubjectExists() {
 
         Subject subject = Subject.builder()
                 .id(1)
@@ -71,7 +71,7 @@ public class SubjectPortIntegrationTest {
 
     @Test
     @DisplayName("Buscar asignatura por id que no existe.")
-    public void onSubjectGetByIdOrCodeNotExists() {
+    public void findSubjectByIdWhenNotExists() {
 
         // Checks
         Subject replyById = this.subjectPort.getById(1);
@@ -81,7 +81,7 @@ public class SubjectPortIntegrationTest {
 
     @Test
     @DisplayName("Buscar asignatura por id.")
-    public void onSubjectGetByIdOrCode() {
+    public void findSubjectById() {
 
         Subject subject = Subject.builder()
                 .id(1)
@@ -99,7 +99,7 @@ public class SubjectPortIntegrationTest {
 
     @Test
     @DisplayName("Eliminar una asignatura.")
-    public void onSubjectRemove() {
+    public void deleteSubject() {
 
         Subject subject = Subject.builder()
                 .id(1)
@@ -117,7 +117,7 @@ public class SubjectPortIntegrationTest {
 
     @Test
     @DisplayName("Obtener todas las asignaturas.")
-    public void onGetAllSubject() {
+    public void findAllSubject() {
 
         this.subjectPort.save(Subject.builder()
                 .id(1)

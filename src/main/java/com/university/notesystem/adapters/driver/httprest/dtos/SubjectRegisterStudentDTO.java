@@ -2,7 +2,6 @@ package com.university.notesystem.adapters.driver.httprest.dtos;
 
 
 import com.university.notesystem.domain.model.request.EntryNoteRequest;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,7 +17,7 @@ import java.util.List;
 public class SubjectRegisterStudentDTO {
 
     @NotNull
-    private int studentId;
+    private Integer studentId;
 
     private List<EntryNoteRequest> notes;
 
