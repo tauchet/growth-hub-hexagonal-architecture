@@ -11,10 +11,11 @@ import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.ports.SubjectPort;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
+import com.university.notesystem.domain.usecases.UseCase;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class SubjectUpdateStudentNotesImpl implements SubjectUpdateStudentNotes {
+public class SubjectUpdateStudentNotesImpl implements SubjectUpdateStudentNotes, UseCase {
 
     private final StudentPort studentPort;
     private final SubjectPort subjectPort;

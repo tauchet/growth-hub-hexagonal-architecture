@@ -1,5 +1,6 @@
 package com.university.notesystem.domain.usescases.subject;
 
+import com.university.notesystem.domain.exceptions.ResourceAlreadyExistsException;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.entities.Subject;
 import com.university.notesystem.domain.ports.SubjectPort;
@@ -16,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 
+@DisplayName("Métodos generales de las asignaturas.")
 @ExtendWith(MockitoExtension.class)
 public class SubjectGeneralTest {
 
@@ -38,6 +40,20 @@ public class SubjectGeneralTest {
 
         // Mock
         Mockito.verify(this.subjectPort, Mockito.times(1)).save(subject);
+
+    }
+
+    @Test
+    @DisplayName("Creación de una asignatura que ya existe su id.")
+    public void onSubjectCreateAlreadyExists() {
+
+        Subject subject = Subject.builder()
+                .id(1)
+                .name("Matemáticas")
+                .build();
+
+        Mockito.when(this.subjectPort.existsById(subject.getId())).thenReturn(true);
+        Assertions.assertThrows(ResourceAlreadyExistsException.class, () -> this.subjectGeneralManager.register(subject));
 
     }
 

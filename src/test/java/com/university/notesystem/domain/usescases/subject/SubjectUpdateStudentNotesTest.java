@@ -1,6 +1,7 @@
 package com.university.notesystem.domain.usescases.subject;
 
 import com.university.notesystem.domain.exceptions.FieldException;
+import com.university.notesystem.domain.exceptions.ResourceAlreadyExistsException;
 import com.university.notesystem.domain.exceptions.ResourceNotFoundException;
 import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Student;
@@ -22,6 +23,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -31,6 +34,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+@DisplayName("Actualizar notas de un estudiante.")
 @ExtendWith(MockitoExtension.class)
 public class SubjectUpdateStudentNotesTest {
 
@@ -46,43 +50,20 @@ public class SubjectUpdateStudentNotesTest {
     @Mock
     private NotePort notePort;
 
-    private SubjectRegisterStudent subjectRegisterStudent;
-    private SubjectUpdateStudentNotes subjectUpdateStudentNotes;
 
-    @BeforeEach
-    public void setUp() {
-        this.subjectRegisterStudent = new SubjectRegisterStudentImpl(this.studentPort,
-                this.subjectPort,
-                this.subjectStudentPort,
-                this.notePort);
-        this.subjectUpdateStudentNotes = new SubjectUpdateStudentNotesImpl(this.studentPort,
-                this.subjectPort,
-                this.subjectStudentPort,
-                this.notePort);
-    }
+    @InjectMocks
+    private SubjectUpdateStudentNotesImpl subjectUpdateStudentNotes;
 
     @Test
-    @DisplayName("Registrar un estudiante que no ha sido agregado a la asignatura.")
-    public void onUpdatesNotesWithoutRegister() {
-
-        Student student = Student.builder()
-                .id(1)
-                .code(1)
-                .name("Cristian")
-                .build();
-
-        Subject subject = Subject.builder()
-                .id(1)
-                .name("Matemáticas")
-                .build();
+    @DisplayName("El estudiante no existe.")
+    public void onSubjectUpdateStudentWithoutStudent() {
 
         // Mock
-        Mockito.when(this.studentPort.getByIdOrCode(student.getId(), student.getCode())).thenReturn(student);
-        Mockito.when(this.subjectPort.existsById(subject.getId())).thenReturn(true);
+        Mockito.when(this.studentPort.getByIdOrCode(1, 1)).thenReturn(null);
 
         SubjectUpdateStudentNotesRequest request = SubjectUpdateStudentNotesRequest.builder()
-                .studentId(student.getId())
-                .subjectId(student.getCode())
+                .studentId(1)
+                .subjectId(1)
                 .notes(null)
                 .build();
 
@@ -91,8 +72,32 @@ public class SubjectUpdateStudentNotesTest {
     }
 
     @Test
-    @DisplayName("Actualizar notas de un estudiante.")
-    public void onUpdatesNotesWithoutStudent() {
+    @DisplayName("La asignatura no existe.")
+    public void onSubjectUpdateStudentWithoutSubject() {
+
+        Student student = Student.builder()
+                .id(1)
+                .code(1)
+                .name("Cristian")
+                .build();
+
+        // Mock
+        Mockito.when(this.studentPort.getByIdOrCode(student.getId(), student.getCode())).thenReturn(student);
+        Mockito.when(this.subjectPort.existsById(1)).thenReturn(false);
+
+        SubjectUpdateStudentNotesRequest request = SubjectUpdateStudentNotesRequest.builder()
+                .studentId(1)
+                .subjectId(1)
+                .notes(null)
+                .build();
+
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> this.subjectUpdateStudentNotes.update(request));
+
+    }
+
+    @Test
+    @DisplayName("El estudiante no ha sido registrado a la asignatura.")
+    public void onSubjectUpdateStudentWhenExists() {
 
         Student student = Student.builder()
                 .id(1)
@@ -107,61 +112,199 @@ public class SubjectUpdateStudentNotesTest {
 
         // Mock
         Mockito.when(this.studentPort.getByIdOrCode(student.getId(), student.getCode())).thenReturn(student);
-        Mockito.when(this.subjectPort.existsById(subject.getId())).thenReturn(true);
-        Mockito.when(this.subjectStudentPort.existsByStudentAndSubject(student.getId(), subject.getId())).thenReturn(false);
+        Mockito.when(this.subjectPort.existsById(1)).thenReturn(true);
+        Mockito.when(this.subjectStudentPort.getByStudentIdOrCodeAndSubjectId(student.getId(), subject.getId())).thenReturn(null);
 
-        SubjectRegisterStudentRequest request = SubjectRegisterStudentRequest.builder()
+        SubjectUpdateStudentNotesRequest request = SubjectUpdateStudentNotesRequest.builder()
                 .studentId(student.getId())
-                .subjectId(subject.getId())
-                .notes(Arrays.asList(
-                        new EntryNoteRequest(1, 0.5),
-                        new EntryNoteRequest(2, 1.5)
-                ))
+                .subjectId(1)
+                .notes(null)
                 .build();
 
-        this.subjectRegisterStudent.register(request);
-
-        SubjectStudent subjectStudent = SubjectStudent.builder()
-                .student(student)
-                .subject(subject)
-                .id(1)
-                .build();
-
-        List<Note> notesMock = new ArrayList<>(
-                Arrays.asList(
-                        Note.builder().number(1).note(0.5).subjectStudent(subjectStudent).id(1).build(),
-                        Note.builder().number(2).note(1.5).subjectStudent(subjectStudent).id(2).build())
-        );
-
-        // Mock
-        Mockito.when(this.subjectStudentPort.existsByStudentAndSubject(student.getId(), subject.getId())).thenReturn(true);
-        Mockito.when(this.subjectStudentPort.getByStudentIdOrCodeAndSubjectId(student.getId(), subject.getId())).thenReturn(subjectStudent);
-        Mockito.when(this.notePort.findBySubjectStudentAndNumber(subjectStudent.getId(), 1)).thenReturn(notesMock.get(0));
-        Mockito.when(this.notePort.findBySubjectStudentAndNumber(subjectStudent.getId(), 2)).thenReturn(notesMock.get(1));
-
-
-        Assertions.assertNotNull(this.subjectStudentPort.getByStudentIdOrCodeAndSubjectId(student.getId(), subject.getId()));
-        Assertions.assertThrows(FieldException.class, () -> this.subjectRegisterStudent.register(request));
-        Assertions.assertEquals(this.notePort.findBySubjectStudentAndNumber(subjectStudent.getId(), 1).getNote(), 0.5);
-        Assertions.assertEquals(this.notePort.findBySubjectStudentAndNumber(subjectStudent.getId(), 2).getNote(), 1.5);
-
-
-        SubjectUpdateStudentNotesRequest updateRequest = SubjectUpdateStudentNotesRequest.builder()
-                .studentId(student.getId())
-                .subjectId(student.getCode())
-                .notes(Collections.singletonList(new EntryNoteRequest(3, 5D)))
-                .build();
-
-
-        this.subjectUpdateStudentNotes.update(updateRequest);
-        Mockito.when(this.notePort.findBySubjectStudentAndNumber(subjectStudent.getId(), 3))
-                .thenReturn(Note.builder().number(3).note(5D).subjectStudent(subjectStudent).id(3).build());
-
-
-        Assertions.assertEquals(this.notePort.findBySubjectStudentAndNumber(subjectStudent.getId(), 3).getNote(), 5);
-
+        Assertions.assertThrows(ResourceNotFoundException.class, () -> this.subjectUpdateStudentNotes.update(request));
 
     }
 
+    @Test
+    @DisplayName("No se enviaron las notas que se desean actualizar.")
+    public void onSubjectUpdateStudentWithoutNotes() {
+
+        Student student = Student.builder()
+                .id(1)
+                .code(1)
+                .name("Cristian")
+                .build();
+
+        Subject subject = Subject.builder()
+                .id(1)
+                .name("Matemáticas")
+                .build();
+
+        // Mock
+        Mockito.when(this.studentPort.getByIdOrCode(student.getId(), student.getCode())).thenReturn(student);
+        Mockito.when(this.subjectPort.existsById(1)).thenReturn(true);
+
+        SubjectStudent subjectStudent = SubjectStudent.builder()
+                .id(0)
+                .student(Student.builder().id(student.getId()).build())
+                .subject(Subject.builder().id(subject.getId()).build())
+                .build();
+        Mockito.when(this.subjectStudentPort.getByStudentIdOrCodeAndSubjectId(student.getId(), subject.getId())).thenReturn(subjectStudent);
+
+        SubjectUpdateStudentNotesRequest request = SubjectUpdateStudentNotesRequest.builder()
+                .studentId(student.getId())
+                .subjectId(1)
+                .notes(null)
+                .build();
+
+        Assertions.assertThrows(FieldException.class, () -> this.subjectUpdateStudentNotes.update(request));
+
+    }
+
+    @Test
+    @DisplayName("Las notas que se enviaron están fuera del limite.")
+    public void onSubjectUpdateStudentLimitNotes() {
+
+        Student student = Student.builder()
+                .id(1)
+                .code(1)
+                .name("Cristian")
+                .build();
+
+        Subject subject = Subject.builder()
+                .id(1)
+                .name("Matemáticas")
+                .build();
+
+        // Mock
+        Mockito.when(this.studentPort.getByIdOrCode(student.getId(), student.getCode())).thenReturn(student);
+        Mockito.when(this.subjectPort.existsById(1)).thenReturn(true);
+
+        SubjectStudent subjectStudent = SubjectStudent.builder()
+                .id(0)
+                .student(Student.builder().id(student.getId()).build())
+                .subject(Subject.builder().id(subject.getId()).build())
+                .build();
+        Mockito.when(this.subjectStudentPort.getByStudentIdOrCodeAndSubjectId(student.getId(), subject.getId())).thenReturn(subjectStudent);
+
+        SubjectUpdateStudentNotesRequest request = SubjectUpdateStudentNotesRequest.builder()
+                .studentId(student.getId())
+                .subjectId(1)
+                .notes(Arrays.asList(
+                        new EntryNoteRequest(1, 1D),
+                        new EntryNoteRequest(2, 5D),
+                        new EntryNoteRequest(3, 4D),
+                        new EntryNoteRequest(4, 1D)
+                ))
+                .build();
+
+        Assertions.assertThrows(FieldException.class, () -> this.subjectUpdateStudentNotes.update(request));
+
+    }
+
+    @Test
+    @DisplayName("Agregar notas nuevas.")
+    public void onSubjectUpdateStudentNotes() {
+
+        Student student = Student.builder()
+                .id(1)
+                .code(1)
+                .name("Cristian")
+                .build();
+
+        Subject subject = Subject.builder()
+                .id(1)
+                .name("Matemáticas")
+                .build();
+
+        // Mock
+        Mockito.when(this.studentPort.getByIdOrCode(student.getId(), student.getCode())).thenReturn(student);
+        Mockito.when(this.subjectPort.existsById(1)).thenReturn(true);
+
+        SubjectStudent subjectStudent = SubjectStudent.builder()
+                .id(0)
+                .student(Student.builder().id(student.getId()).build())
+                .subject(Subject.builder().id(subject.getId()).build())
+                .build();
+        Mockito.when(this.subjectStudentPort.getByStudentIdOrCodeAndSubjectId(student.getId(), subject.getId())).thenReturn(subjectStudent);
+
+        SubjectUpdateStudentNotesRequest request = SubjectUpdateStudentNotesRequest.builder()
+                .studentId(student.getId())
+                .subjectId(1)
+                .notes(Arrays.asList(
+                        new EntryNoteRequest(3, 4D)
+                ))
+                .build();
+
+        // Function
+        this.subjectUpdateStudentNotes.update(request);
+
+        ArgumentCaptor<Note> reply = ArgumentCaptor.forClass(Note.class);
+        Mockito.verify(this.notePort, Mockito.times(request.getNotes().size())).save(reply.capture());
+
+        // Verify notes
+        List<Note> replyNotes = reply.getAllValues();
+        for (int i = 0; i < request.getNotes().size(); ++i) {
+            EntryNoteRequest entryNoteRequest = request.getNotes().get(i);
+            Note note = replyNotes.get(i);
+            Assertions.assertEquals(note.getSubjectStudent().getId(), subjectStudent.getId());
+            Assertions.assertEquals(note.getNumber(), entryNoteRequest.getNumber());
+            Assertions.assertEquals(note.getNote(), entryNoteRequest.getValue());
+        }
+
+    }
+
+    @Test
+    @DisplayName("Reemplazar notas antiguas")
+    public void onSubjectUpdateStudentReplaceNotes() {
+
+        Student student = Student.builder()
+                .id(1)
+                .code(1)
+                .name("Cristian")
+                .build();
+
+        Subject subject = Subject.builder()
+                .id(1)
+                .name("Matemáticas")
+                .build();
+
+        // Mock
+        Mockito.when(this.studentPort.getByIdOrCode(student.getId(), student.getCode())).thenReturn(student);
+        Mockito.when(this.subjectPort.existsById(1)).thenReturn(true);
+
+        SubjectStudent subjectStudent = SubjectStudent.builder()
+                .id(0)
+                .student(Student.builder().id(student.getId()).build())
+                .subject(Subject.builder().id(subject.getId()).build())
+                .build();
+        Mockito.when(this.subjectStudentPort.getByStudentIdOrCodeAndSubjectId(student.getId(), subject.getId())).thenReturn(subjectStudent);
+
+        Note note = Note.builder()
+                .id(1)
+                .number(1)
+                .note(1D)
+                .subjectStudent(subjectStudent)
+                .build();
+        Mockito.when(this.notePort.findBySubjectStudentAndNumber(subjectStudent.getId(), note.getNumber())).thenReturn(note);
+
+        SubjectUpdateStudentNotesRequest request = SubjectUpdateStudentNotesRequest.builder()
+                .studentId(student.getId())
+                .subjectId(1)
+                .notes(List.of(new EntryNoteRequest(1, 2D)))
+                .build();
+
+        // Function
+        this.subjectUpdateStudentNotes.update(request);
+
+        ArgumentCaptor<Note> reply = ArgumentCaptor.forClass(Note.class);
+        Mockito.verify(this.notePort, Mockito.times(1)).save(reply.capture());
+
+        // Verify notes
+        Assertions.assertEquals(reply.getValue().getSubjectStudent().getId(), subjectStudent.getId());
+        Assertions.assertEquals(reply.getValue().getNumber(), 1);
+        Assertions.assertEquals(reply.getValue().getNote(), 2D);
+
+    }
 
 }

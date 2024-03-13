@@ -13,10 +13,11 @@ import com.university.notesystem.domain.ports.NotePort;
 import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.ports.SubjectPort;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
+import com.university.notesystem.domain.usecases.UseCase;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class SubjectRegisterStudentImpl implements SubjectRegisterStudent {
+public class SubjectRegisterStudentImpl implements SubjectRegisterStudent, UseCase {
 
     private final StudentPort studentPort;
     private final SubjectPort subjectPort;
@@ -50,7 +51,7 @@ public class SubjectRegisterStudentImpl implements SubjectRegisterStudent {
 
         SubjectStudent register = this.subjectStudentPort.save(
                 SubjectStudent.builder()
-                        .student(student)
+                        .student(Student.builder().id(data.getStudentId()).build())
                         .subject(Subject.builder().id(data.getSubjectId()).build())
                         .build());
 
@@ -60,7 +61,7 @@ public class SubjectRegisterStudentImpl implements SubjectRegisterStudent {
 
         for (EntryNoteRequest note: data.getNotes()) {
             this.notePort.save(Note.builder()
-                    .subjectStudent(register)
+                    .subjectStudent(SubjectStudent.builder().id(register.getId()).build())
                     .number(note.getNumber())
                     .note(note.getValue())
                     .build());

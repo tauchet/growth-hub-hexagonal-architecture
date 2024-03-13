@@ -1,5 +1,6 @@
 package com.university.notesystem.domain.usescases.student;
 
+import com.university.notesystem.domain.exceptions.ResourceAlreadyExistsException;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.usecases.student.*;
@@ -15,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
 
+@DisplayName("Métodos generales de los estudiantes.")
 @ExtendWith(MockitoExtension.class)
 public class StudentGeneralTest {
 
@@ -41,11 +43,27 @@ public class StudentGeneralTest {
     }
 
     @Test
+    @DisplayName("Creación de un estudiante que ya existe su id o código.")
+    public void onStudentCreateAlreadyExists() {
+
+        Student student = Student.builder()
+                .id(1)
+                .code(1)
+                .name("Cristian")
+                .build();
+
+        Mockito.when(this.studentPort.existsByIdOrCode(student.getId(), student.getCode())).thenReturn(true);
+        Assertions.assertThrows(ResourceAlreadyExistsException.class, () -> this.studentGeneralManager.register(student));
+
+    }
+
+    @Test
     @DisplayName("Eliminanción de un estudiante.")
     public void onStudentDelete() {
 
         Student student = Student.builder()
                 .id(1)
+                .code(1)
                 .name("Cristian")
                 .build();
 

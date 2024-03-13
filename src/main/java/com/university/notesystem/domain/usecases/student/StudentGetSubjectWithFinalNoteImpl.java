@@ -9,6 +9,7 @@ import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.mapper.SubjectWithFinalNoteDTOMapper;
 import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
+import com.university.notesystem.domain.usecases.UseCase;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
@@ -19,31 +20,10 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.groupingBy;
 
 @RequiredArgsConstructor
-public class StudentGetSubjectWithFinalNoteImpl implements StudentGetSubjectWithFinalNote {
+public class StudentGetSubjectWithFinalNoteImpl implements StudentGetSubjectWithFinalNote, UseCase {
 
     private final StudentPort studentPort;
     private final SubjectStudentPort subjectStudentPort;
-
-    @Override
-    public List<StudentWithAllFinalNoteModel> getAll() {
-        List<SubjectStudentWithNotesModel> allNotes = this.subjectStudentPort.findAllSubjectWithNotes();
-        Map<Integer, List<SubjectStudentWithNotesModel>> mapByStudentId = allNotes.stream().collect(groupingBy(x -> x.getStudent().getId()));
-
-        return mapByStudentId
-                .values()
-                .stream()
-                .map(notes -> {
-                    Student student = notes.get(0).getStudent();
-                    return new StudentWithAllFinalNoteModel(
-                            student.getId(),
-                            student.getName(),
-                            notes
-                                    .stream()
-                                    .map(x -> SubjectWithFinalNoteDTOMapper.mapToSubjectWithFinalNoteDTO(x.getSubject(), x.getNotes()))
-                                    .toList()
-                    );
-                }).toList();
-    }
 
     @Override
     public List<SubjectWithFinalNoteModel> getAllByStudentIdOrCode(Integer id, Integer code) {
@@ -61,5 +41,29 @@ public class StudentGetSubjectWithFinalNoteImpl implements StudentGetSubjectWith
                 .collect(Collectors.toList());
 
     }
+
+    @Override
+    public List<StudentWithAllFinalNoteModel> getAll() {
+        List<SubjectStudentWithNotesModel> allNotes = this.subjectStudentPort.findAllSubjectWithNotes();
+        Map<Integer, List<SubjectStudentWithNotesModel>> mapByStudentId = allNotes.stream().collect(groupingBy(x -> x.getStudent().getId()));
+
+        return mapByStudentId
+                .values()
+                .stream()
+                .map(notes -> {
+                    Student student = notes.get(0).getStudent();
+                    return new StudentWithAllFinalNoteModel(
+                            student.getId(),
+                            student.getName(),
+                            notes
+                                    .stream()
+                                    .map(x -> SubjectWithFinalNoteDTOMapper.mapToSubjectWithFinalNoteDTO(x.getSubject(), x.getNotes()))
+                                    .filter(Objects::nonNull)
+                                    .toList()
+                    );
+                }).toList();
+    }
+
+
 
 }
