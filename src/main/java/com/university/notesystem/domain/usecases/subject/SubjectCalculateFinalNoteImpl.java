@@ -5,16 +5,14 @@ import com.university.notesystem.domain.model.SubjectWithFinalNoteModel;
 import com.university.notesystem.domain.model.SubjectWithNotesModel;
 import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Subject;
-import com.university.notesystem.domain.usecases.UseCase;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.List;
 
-public class SubjectCalculateFinalNoteImpl implements SubjectCalculateFinalNote, UseCase {
+public class SubjectCalculateFinalNoteImpl implements SubjectCalculateFinalNote {
 
     public SubjectWithFinalNoteModel calculate(SubjectWithNotesModel dto) {
-
         if (dto.getNotes() == null || dto.getNotes().size() < 3) {
             return null;
         }
@@ -36,7 +34,7 @@ public class SubjectCalculateFinalNoteImpl implements SubjectCalculateFinalNote,
     @Override
     public SubjectWithFinalNoteModel calculate(Subject subject, List<Note> notes) {
 
-        if (notes.size() < 3) {
+        if (notes == null || notes.size() < 3) {
             return null;
         }
 

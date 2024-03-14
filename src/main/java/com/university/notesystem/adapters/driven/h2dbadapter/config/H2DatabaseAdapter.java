@@ -24,29 +24,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @RequiredArgsConstructor
 public class H2DatabaseAdapter  {
 
-    private final SubjectRepository subjectRepository;
-    private final NoteRepository notesRepository;
-    private final StudentRepository studentRepository;
-    private final SubjectStudentRepository subjectStudentRepository;
-
-    @Bean
-    public SubjectPort enableSubjectPort() {
-        return new SubjectService(this.subjectRepository);
-    }
-
-    @Bean
-    public NotePort enableNotesPort() {
-        return new NoteService(this.notesRepository);
-    }
-
-    @Bean
-    public StudentPort enableStudentPort() {
-        return new StudentService(this.studentRepository);
-    }
-
-    @Bean
-    public SubjectStudentPort enableSubjectStudentPort() {
-        return new SubjectStudentService(this.subjectStudentRepository);
-    }
-
 }

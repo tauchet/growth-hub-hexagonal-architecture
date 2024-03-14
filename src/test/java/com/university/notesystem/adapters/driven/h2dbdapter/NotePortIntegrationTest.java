@@ -21,7 +21,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest(classes = { NoteSystemApplication.class, H2DatabaseAdapter.class })
-@SpringBootConfiguration
 @Transactional
 @DisplayName("Integración de puerto de notas.")
 public class NotePortIntegrationTest {

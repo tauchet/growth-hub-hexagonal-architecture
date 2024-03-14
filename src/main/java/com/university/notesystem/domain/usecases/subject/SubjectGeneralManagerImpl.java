@@ -1,16 +1,14 @@
 package com.university.notesystem.domain.usecases.subject;
 
-import com.university.notesystem.domain.exceptions.FieldException;
 import com.university.notesystem.domain.exceptions.ResourceAlreadyExistsException;
 import com.university.notesystem.domain.model.entities.Subject;
 import com.university.notesystem.domain.ports.SubjectPort;
-import com.university.notesystem.domain.usecases.UseCase;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-public class SubjectGeneralManagerImpl implements SubjectGeneralManager, UseCase {
+public class SubjectGeneralManagerImpl implements SubjectGeneralManager {
 
     private final SubjectPort subjectPort;
 

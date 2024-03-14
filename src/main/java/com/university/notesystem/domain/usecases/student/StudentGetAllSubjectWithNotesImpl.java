@@ -5,13 +5,12 @@ import com.university.notesystem.domain.model.SubjectWithNotesModel;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
-import com.university.notesystem.domain.usecases.UseCase;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-public class StudentGetAllSubjectWithNotesImpl implements StudentGetAllSubjectWithNotes, UseCase {
+public class StudentGetAllSubjectWithNotesImpl implements StudentGetAllSubjectWithNotes {
 
     private final StudentPort studentPort;
     private final SubjectStudentPort subjectStudentPort;

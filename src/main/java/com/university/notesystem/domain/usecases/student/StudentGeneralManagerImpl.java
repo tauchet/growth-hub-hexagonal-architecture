@@ -1,16 +1,14 @@
 package com.university.notesystem.domain.usecases.student;
 
-import com.university.notesystem.domain.exceptions.FieldException;
 import com.university.notesystem.domain.exceptions.ResourceAlreadyExistsException;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.ports.StudentPort;
-import com.university.notesystem.domain.usecases.UseCase;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @RequiredArgsConstructor
-public class StudentGeneralManagerImpl implements StudentGeneralManager, UseCase {
+public class StudentGeneralManagerImpl implements StudentGeneralManager {
 
     private final StudentPort studentPort;
 

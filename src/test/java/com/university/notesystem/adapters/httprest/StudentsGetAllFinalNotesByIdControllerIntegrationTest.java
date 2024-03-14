@@ -135,6 +135,7 @@ public class StudentsGetAllFinalNotesByIdControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success.[1].notes.[0].id", Is.is(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success.[1].notes.[0].note", Is.is(2D)));
 
+
     }
 
 }

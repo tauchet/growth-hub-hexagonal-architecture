@@ -5,19 +5,22 @@ import com.university.notesystem.domain.model.*;
 import com.university.notesystem.domain.model.entities.Note;
 import com.university.notesystem.domain.model.entities.Student;
 import com.university.notesystem.domain.model.entities.Subject;
-import com.university.notesystem.domain.model.entities.SubjectStudent;
 import com.university.notesystem.domain.ports.StudentPort;
 import com.university.notesystem.domain.ports.SubjectStudentPort;
-import com.university.notesystem.domain.usecases.student.StudentGetAllSubjectWithNotesImpl;
 import com.university.notesystem.domain.usecases.student.StudentGetSubjectWithFinalNoteImpl;
+import com.university.notesystem.domain.usecases.subject.SubjectCalculateFinalNote;
+import com.university.notesystem.domain.usecases.subject.SubjectCalculateFinalNoteImpl;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -33,8 +36,12 @@ public class StudentGetFinalNotesTest {
     @Mock
     private SubjectStudentPort subjectStudentPort;
 
+    @Spy
+    private SubjectCalculateFinalNoteImpl subjectCalculateFinalNote;
+
     @InjectMocks
     private StudentGetSubjectWithFinalNoteImpl studentGetSubjectWithFinalNote;
+
 
     @Test
     @DisplayName("El estudiante no existe.")
@@ -238,6 +245,7 @@ public class StudentGetFinalNotesTest {
         // Function
         List<StudentWithAllFinalNoteModel> reply = this.studentGetSubjectWithFinalNote.getAll();
         Assertions.assertEquals(reply.size(), 3);
+
 
 
         // Cristian -> Matemáticas 2 + 3 + 4 = 9 / 3 = 3
