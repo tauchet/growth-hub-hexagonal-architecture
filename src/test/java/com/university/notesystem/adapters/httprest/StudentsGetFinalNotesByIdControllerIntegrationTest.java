@@ -1,6 +1,16 @@
 package com.university.notesystem.adapters.httprest;
 
 import com.university.notesystem.adapters.driven.h2dbadapter.repository.NoteRepository;
+import com.university.notesystem.adapters.driven.h2dbadapter.repository.StudentRepository;
+import com.university.notesystem.adapters.driven.h2dbadapter.repository.SubjectRepository;
+import com.university.notesystem.adapters.driven.h2dbadapter.repository.SubjectStudentRepository;
+import com.university.notesystem.domain.model.entities.Student;
+import com.university.notesystem.domain.model.entities.Subject;
+import com.university.notesystem.domain.model.request.EntryNoteRequest;
+import com.university.notesystem.domain.model.request.SubjectRegisterStudentRequest;
+import com.university.notesystem.domain.usecases.student.StudentGeneralManager;
+import com.university.notesystem.domain.usecases.subject.SubjectGeneralManager;
+import com.university.notesystem.domain.usecases.subject.SubjectRegisterStudent;
 import com.university.notesystem.infrastructure.application.NoteSystemApplication;
 import jakarta.annotation.Priority;
 import jakarta.transaction.Transactional;
@@ -18,6 +28,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.List;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest(classes = NoteSystemApplication.class)
@@ -29,9 +41,37 @@ public class StudentsGetFinalNotesByIdControllerIntegrationTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
+    @Autowired
+    private StudentGeneralManager studentGeneralManager;
+
+    @Autowired
+    private SubjectGeneralManager subjectGeneralManager;
+
+    @Autowired
+    private SubjectRegisterStudent subjectRegisterStudent;
+
+    @Autowired
+    private StudentRepository studentRepository;
+
+    @Autowired
+    private SubjectRepository subjectRepository;
+
+    @Autowired
+    private SubjectStudentRepository subjectStudentRepository;
+
+    @Autowired
+    private NoteRepository noteRepository;
+
     @BeforeEach
     public void setUp() {
         mvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
+
+    private void clear() {
+        this.subjectStudentRepository.deleteAll();
+        this.subjectRepository.deleteAll();
+        this.studentRepository.deleteAll();
+        this.noteRepository.deleteAll();
     }
 
     @Test
@@ -54,67 +94,47 @@ public class StudentsGetFinalNotesByIdControllerIntegrationTest {
     @DisplayName("Buscar notas finales por un estudiante.")
     public void onStudentGetAllNotesById() throws Exception {
 
-        this.mvc.perform(MockMvcRequestBuilders
-                .post("/students")
-                .contentType("application/json")
-                .content("""
-                            {
-                                "id": 1,
-                                "name": "Cristian",
-                                "code": 1
-                            }
-                        """));
+        clear();
 
-        this.mvc.perform(MockMvcRequestBuilders
-                .post("/subjects")
-                .contentType("application/json")
-                .content("""
-                            {
-                                "id": 1,
-                                "name": "Matemáticas"
-                            }
-                        """));
+        this.studentGeneralManager.register(Student.builder()
+                .id(1)
+                .code(1)
+                .name("Cristian")
+                .build());
 
-        this.mvc.perform(MockMvcRequestBuilders
-                .post("/subjects")
-                .contentType("application/json")
-                .content("""
-                            {
-                                "id": 2,
-                                "name": "Programación"
-                            }
-                        """));
+        this.subjectGeneralManager.register(Subject.builder()
+                .id(1)
+                .name("Matemáticas")
+                .build());
+
+        this.subjectGeneralManager.register(Subject.builder()
+                .id(2)
+                .name("Programación")
+                .build());
 
 
-        this.mvc.perform(MockMvcRequestBuilders
-                .post("/subjects/1/students")
-                .contentType("application/json")
-                .content("""
-                            {
-                                "studentId": 1,
-                                "notes": [
-                                    { "number": 1, "value": 3 },
-                                    { "number": 2, "value": 3 },
-                                    { "number": 3, "value": 3 }
-                                ]
-                            }
-                        """));
+        this.subjectRegisterStudent.register(
+                new SubjectRegisterStudentRequest(
+                        1,
+                        1,
+                        List.of(
+                                new EntryNoteRequest(1, 3D),
+                                new EntryNoteRequest(2, 3D),
+                                new EntryNoteRequest(3, 3D)
+                        )
+                )
+        );
 
-        this.mvc.perform(MockMvcRequestBuilders
-                .post("/subjects/2/students")
-                .contentType("application/json")
-                .content("""
-                            {
-                                "studentId": 1,
-                                "notes": [
-                                    { "number": 1, "value": 1 },
-                                    { "number": 2, "value": 2 }
-                                ]
-                            }
-                        """));
-
-
-
+        this.subjectRegisterStudent.register(
+                new SubjectRegisterStudentRequest(
+                        1,
+                        2,
+                        List.of(
+                                new EntryNoteRequest(1, 1D),
+                                new EntryNoteRequest(2, 2D)
+                        )
+                )
+        );
 
         this.mvc.perform(MockMvcRequestBuilders
                         .get("/students/1/final-notes"))
@@ -124,6 +144,8 @@ public class StudentsGetFinalNotesByIdControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success.length()", Is.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success.[0].id", Is.is(1)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.success.[0].note", Is.is(3D)));
+
+        clear();
 
     }
 
